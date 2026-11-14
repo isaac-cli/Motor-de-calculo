@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+  (function () {
+    function atrapar(evento) {
+      var transicion = evento.viewTransition;
+      if (!transicion) return;
+      if (transicion.ready) transicion.ready.catch(function () {});
+      if (transicion.updateCallbackDone) transicion.updateCallbackDone.catch(function () {});
+      if (transicion.finished) transicion.finished.catch(function () {});
+    }
+    function esTransicion(razon) {
+      var mensaje = razon && typeof razon.message === "string" ? razon.message : (typeof razon === "string" ? razon : "");
+      return /view.?transition|Transition was skipped|skipped view/i.test(mensaje);
+    }
+    window.addEventListener("pagereveal", atrapar);
+    window.addEventListener("pageswap", atrapar);
+    window.addEventListener("unhandledrejection", function (evento) {
+      if (esTransicion(evento.reason)) evento.preventDefault();
+    });
+  })();
+  </script>
+  <style>
+  @view-transition { navigation: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition { navigation: none; }
+  }
+  </style>
+  <title>Calculador Geométrico de Hojalatería · Colegual SpA</title>
+  <meta name="description" content="Calcula perfiles de hojalatería a medida en Puerto Montt. Eliges la pieza, ajustas medidas y ángulos, y obtienes el desarrollo y desglose de cortes.">
+  <link rel="icon" href="static/img/logo.svg?v=1" type="image/svg+xml">
+  <link rel="icon" href="static/img/logo-192.png?v=1" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="static/img/logo-192.png?v=1">
+  <meta property="og:title" content="Calculador Geométrico de Hojalatería · Colegual SpA">
+  <meta property="og:description" content="Calcula perfiles de hojalatería a medida en Puerto Montt. Eliges la pieza, ajustas medidas y ángulos, y obtienes el desarrollo y desglose de cortes.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:site_name" content="Colegual SpA">
+  <meta property="og:image" content="static/img/logo-512.png?v=1">
+  <meta property="og:image:alt" content="Logo de Colegual: casita azul sobre un cuadrado ámbar">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2">
+  <style>
+    @font-face { font-family: Inter; font-style: normal; font-weight: 400 900; font-display: optional; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 800; font-display: optional; src: url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  </style>
+  <link rel="stylesheet" href="static/css/styles.css?v=3">
+  <link rel="stylesheet" href="static/css/encabezado.css?v=3">
+</head>
+<body class="bg-navy font-sans text-white antialiased">
+  <a class="skip-link" href="#cotizador">Saltar al calculador</a>
+
+<!-- encabezado:inicio -->
+<svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4-2.2 1.3a12 12 0 0 0 5.4 5.4l1.3-2.2 4 1.5v3a2 2 0 0 1-2 2A15.5 15.5 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M6 3.5h9l3.5 3.5V20.5H6z"/><path d="M15 3.5V7h3.5M8 11h8M8 15h5"/></symbol>
+  </svg>
+  <header class="site-header" id="nav-cliente">
+    <nav class="shell nav-inner" aria-label="Navegación principal">
+      <a class="brand" href="index.html#inicio" aria-label="Colegual SpA, inicio"><span class="brand-mark"><img src="static/img/logo.svg?v=1" alt="Logo de Colegual" width="48" height="48" decoding="async"></span><span><strong>Colegual <span>SpA</span></strong><small>Constructora & Hojalatería</small></span></a>
+      <div class="desktop-links"><a href="index.html#hojalateria">Hojalatería</a><a href="index.html#constructora">Construcción</a><a href="index.html#trabajos">Trabajos</a><a href="index.html#contacto">Contacto</a></div>
+      <div class="nav-actions"><span id="nav-auth"><a class="account-link" href="cotizador.html#ingresar" data-action="abrir-auth">Ingresar</a></span><a class="account-link nav-cotizacion" href="cotizador.html#cotizador" aria-labelledby="nav-carrito-nombre nav-carrito-contador"><svg class="icon nav-cotizacion-icono" aria-hidden="true"><use href="#i-quote"/></svg><span id="nav-carrito-nombre">Mi lista</span> <span class="nav-cotizacion-cuenta">(<span id="nav-carrito-contador" class="nav-cotizacion-n">0</span>)</span></a><a class="account-link" href="cotizador.html?demo#cuenta" data-solo-demo hidden>Mi cuenta</a><a class="action action-amber nav-cta" href="cotizador.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Calcular</a><button class="icon-button mobile-menu-button" id="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button></div>
+    </nav>
+    <nav id="mobile-menu" class="mobile-menu shell" aria-label="Navegación móvil" hidden><a href="index.html#hojalateria">Hojalatería</a><a href="index.html#constructora">Construcción</a><a href="index.html#trabajos">Trabajos</a><a href="index.html#contacto">Contacto</a><a href="cotizador.html#ingresar">Ingresar</a><a href="cotizador.html#cotizador">Mi lista (<span id="nav-cotizacion-n-movil" class="nav-cotizacion-n">0</span>)</a><a href="cotizador.html">Calcular</a><a href="cotizador.html?demo#cuenta" data-solo-demo hidden>Mi cuenta</a></nav>
+    <script>
+    (function () {
+      var n = "0";
+      try {
+        var texto = localStorage.getItem("colegual.matematicas.mockup.v1");
+        var guardado = JSON.parse(texto || "null");
+        var marca = Number(guardado && guardado.guardadoEn);
+        var vigente = Number.isFinite(marca) && marca <= Date.now() && Date.now() - marca < 7 * 24 * 60 * 60 * 1000;
+        if (!vigente) {
+          if (texto) localStorage.removeItem("colegual.matematicas.mockup.v1");
+        } else if (guardado && Array.isArray(guardado.carrito)) n = String(guardado.carrito.length);
+      } catch (e) {
+        try { localStorage.removeItem("colegual.matematicas.mockup.v1"); } catch (e2) {}
+      }
+      var nodos = document.querySelectorAll(".nav-cotizacion-n");
+      for (var i = 0; i < nodos.length; i++) nodos[i].textContent = n;
+    })();
+    </script>
+  </header>
+<!-- encabezado:fin -->
+
+  <nav id="nav-taller" class="hidden sticky top-0 z-40 border-b border-slate-700 bg-steel" aria-label="Panel del taller" hidden>
+      <div class="mx-auto flex min-h-16 max-w-[1600px] flex-wrap items-center gap-4 px-4 py-2">
+        <div class="flex items-center gap-3">
+          <span class="flex h-10 w-10 items-center justify-center rounded-md bg-accent text-ink" aria-hidden="true"><svg class="h-6 w-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 4a5 5 0 0 0-4.6 6.9L4 17.3V20h2.7l6.4-6.4A5 5 0 0 0 20 9l-3 1-2-2 1-3Z"/></svg></span>
+          <span class="leading-tight">
+            <span class="block text-base font-extrabold text-white">Panel de Control del Taller</span>
+            <span class="block text-base text-slate-400">Colegual SpA · Producción y abastecimiento</span>
+          </span>
+        </div>
+        <ul class="flex flex-wrap items-center gap-2 text-base">
+          <li><a class="inline-flex min-h-12 items-center rounded-md px-3 font-semibold text-white hover:bg-white/10" href="#taller-bandeja">Bandeja</a></li>
+          <li><a class="inline-flex min-h-12 items-center rounded-md px-3 font-semibold text-white hover:bg-white/10" href="#taller-abastecimiento">Lote y tablero</a></li>
+          <li><a class="inline-flex min-h-12 items-center rounded-md px-3 font-semibold text-white hover:bg-white/10" href="#taller-obra">Consultas de obra</a></li>
+          <li><a class="inline-flex min-h-12 items-center rounded-md px-3 font-semibold text-white hover:bg-white/10" href="#taller-tarifas">Especificaciones</a></li>
+        </ul>
+        <div class="ml-auto flex items-center gap-3">
+          <button type="button" class="btn-outline-dark min-h-12 text-base" data-action="cambiar-vista" data-vista="cliente"><svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 12H4m6-6-6 6 6 6"/></svg> Volver al cotizador</button>
+          <span id="taller-fecha" class="measure hidden text-base text-slate-400 sm:inline"></span>
+          <button type="button" id="btn-modo-pantalla" class="min-h-12 btn-outline-dark py-2 text-base" data-action="toggle-modo-pantalla" aria-pressed="false">
+            Modo pantalla de taller
+          </button>
+        </div>
+      </div>
+  </nav>
+
+  <!-- ============================== VISTA 1: PORTAL DEL CLIENTE ============================== -->
+  <div id="vista-cliente">
+    <main id="portal-cliente">
+      <!-- Cotizador de hojalatería en 4 pasos -->
+      <section id="cotizador" class="bg-grid-light border-y border-slate-200 bg-slate-100 py-10 text-lg text-slate-700 sm:py-16" aria-labelledby="cotizador-titulo">
+        <div class="mx-auto max-w-5xl px-4">
+          <p class="eyebrow-light text-base">Hojalatería · Motor Matemático</p>
+          <h1 id="cotizador-titulo" class="section-title mt-3">Arma tu pieza, ajusta sus ángulos y calcula el desarrollo al instante.</h1>
+          <ol id="pasos-barra" class="pasos-linea" aria-label="Pasos del cálculo">
+            <li><button type="button" class="paso-btn" data-action="ir-paso" data-paso="medidas" data-estado="actual" aria-current="step"><span class="paso-num">1</span> <span class="paso-largo">Medidas</span><span class="paso-corto">Med.</span></button></li>
+            <li><button type="button" class="paso-btn" data-action="ir-paso" data-paso="cotizacion" data-estado="pendiente"><span class="paso-num">2</span> <span class="paso-largo">Mi lista</span><span class="paso-corto">Lista</span></button></li>
+            <li><button type="button" class="paso-btn" data-action="ir-paso" data-paso="datos" data-estado="pendiente"><span class="paso-num">3</span> <span class="paso-largo">Mis datos</span><span class="paso-corto">Datos</span></button></li>
+            <li><button type="button" class="paso-btn" data-action="ir-paso" data-paso="lista" data-estado="pendiente"><span class="paso-num">4</span> <span class="paso-largo">Resumen</span><span class="paso-corto">Fin</span></button></li>
+          </ol>
+
+          <div id="paso-medidas" class="mt-8 space-y-6">
+            <div class="flex flex-wrap gap-3">
+              <button type="button" class="btn-outline min-h-12 text-lg" data-action="abrir-no-se">No sé cómo se llama</button>
+              <button type="button" class="btn-outline min-h-12 text-lg" data-action="abrir-especial">Pieza especial</button>
+            </div>
+
+            <div class="grid items-start gap-6 lg:grid-cols-[240px_minmax(0,1fr)_minmax(16rem,20rem)]">
+
+            <!-- Columna izquierda: selector de perfiles -->
+            <aside class="card overflow-hidden" aria-label="Seleccionar perfil">
+              <h3 class="border-b border-slate-200 px-4 py-3 text-base font-bold uppercase tracking-wide text-slate-500">1 · Elige el perfil</h3>
+              <ul id="selector-perfiles" class="divide-y divide-slate-100"></ul>
+            </aside>
+
+            <!-- Columna central: mesa de configuración -->
+            <article class="card overflow-hidden" aria-labelledby="mesa-titulo">
+              <header class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4">
+                <div>
+                  <p class="text-base font-bold uppercase tracking-wide text-slate-500">2 · Mesa de configuración</p>
+                  <h3 id="mesa-titulo" class="mt-0.5 text-xl font-extrabold text-navy">Canaleta</h3>
+                </div>
+                <span id="mesa-pliegues" class="badge text-base measure bg-slate-100 text-slate-600 ring-1 ring-slate-200"></span>
+              </header>
+
+              <div class="grid md:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)]">
+                <div class="flex flex-col border-b border-slate-200 bg-slate-50 md:border-b-0 md:border-r">
+                  <div id="mesa-svg" class="h-64 sm:h-72"></div>
+                  <div class="flex flex-wrap items-center justify-between gap-2 border-t border-slate-200/80 bg-white/70 px-4 py-2 text-sm text-slate-600">
+                    <span>Pincha y arrastra un lado o pliegue para cambiar su ángulo</span>
+                    <button type="button" class="font-bold text-amber-800 underline hover:text-amber-700" data-action="restablecer-angulos">Restablecer ángulos</button>
+                  </div>
+                </div>
+                <div class="px-5 py-4">
+                  <p class="field-label text-base">Medida de cada lado (cm)</p>
+                  <div id="mesa-lados" class="space-y-2.5"></div>
+                </div>
+              </div>
+
+              <div class="border-t border-slate-200 px-5 py-4">
+                <p class="field-label text-base">CM.D · Centímetros de desarrollo</p>
+                <p id="mesa-formula" class="measure text-2xl font-bold text-navy sm:text-3xl" aria-live="polite"></p>
+              </div>
+
+              <div class="mesa-opciones space-y-5 border-t border-slate-200 px-5 py-5">
+                <fieldset>
+                  <legend class="field-label text-base">Espesor de plancha</legend>
+                  <div id="mesa-espesores" class="grid gap-2 sm:grid-cols-2"></div>
+                </fieldset>
+                <div class="mesa-pie">
+                  <fieldset>
+                    <legend class="field-label text-base">Material / Color</legend>
+                    <div id="mesa-materiales" class="flex flex-wrap gap-2"></div>
+                    <p id="mesa-material-nombre" class="mt-1.5 text-base text-slate-500"></p>
+                  </fieldset>
+                  <label class="block">
+                    <span class="field-label text-base">Metros lineales</span>
+                    <span class="relative block">
+                      <input id="mesa-metros" type="number" inputmode="decimal" min="0" step="0.5" class="input-cm" aria-describedby="mesa-tiras">
+                      <span class="measure pointer-events-none absolute inset-y-0 right-3 flex items-center text-base font-semibold text-slate-700">Mts</span>
+                    </span>
+                  </label>
+                  <label class="flex min-h-12 cursor-pointer items-center gap-3 rounded-md border border-slate-300 px-3 py-2.5 transition has-[:checked]:border-accent has-[:checked]:bg-amber-50">
+                    <input id="mesa-molde" type="checkbox" class="h-6 w-6 shrink-0 accent-amber-600">
+                    <span class="text-base leading-tight">
+                      <span class="block font-semibold text-slate-800">Molde en Cartón</span>
+                      <span class="measure text-slate-500">Incluir plantilla a escala real</span>
+                    </span>
+                  </label>
+                </div>
+                <p id="mesa-tiras" class="measure text-base text-slate-500"></p>
+              </div>
+            </article>
+
+            <aside id="precio-vivo" class="precio-vivo border-t border-slate-200 bg-slate-50 px-5 py-5 text-ink lg:rounded-lg lg:border" aria-label="Resumen de esta pieza">
+                <div class="flex flex-wrap items-end justify-between gap-4">
+                  <div class="min-w-0">
+                    <p class="text-base font-semibold uppercase tracking-wide text-slate-600">Desarrollo total (CM.D)</p>
+                    <p id="mesa-desglose" class="precio-extra measure mt-1 text-lg text-slate-700"></p>
+                    <p id="mesa-api" class="precio-extra mt-2 text-base" aria-live="polite"></p>
+                  </div>
+                  <p id="mesa-total" class="measure text-4xl font-extrabold text-amber-800 sm:text-5xl" aria-live="polite">—</p>
+                </div>
+                <ul id="mesa-errores" class="mt-3 hidden space-y-1 rounded-md bg-red-50 px-3 py-2 text-lg text-red-700 ring-1 ring-red-200"></ul>
+                <p id="mesa-ayuda-especial" class="precio-extra mt-3 hidden text-lg text-amber-800">¿Tus medidas superan los límites de la plancha (122 cm)? Pide una pieza especial.</p>
+                <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                  <button type="button" class="precio-extra btn-outline min-h-12 text-lg" data-action="limpiar-mesa">Limpiar</button>
+                  <button type="button" id="btn-agregar" class="btn-primary min-h-12 text-lg" data-action="agregar-carrito"><span class="precio-agregar-largo">Agregar a mi lista</span><span class="precio-agregar-corto">Agregar</span></button>
+                </div>
+                <p class="precio-extra mt-3 text-base text-slate-600">¿Necesitas una geometría con más lados que no está aquí?</p>
+                <button type="button" class="precio-extra mt-2 inline-flex min-h-12 items-center font-semibold text-amber-800 underline" data-action="abrir-especial">Pide una pieza especial</button>
+            </aside>
+            </div>
+          </div>
+
+          <div id="paso-cotizacion" class="mt-8 motion-safe:animate-fade-in" hidden>
+            <h3 class="text-2xl font-extrabold text-navy">Mi lista de piezas</h3>
+            <p class="mt-2 text-lg text-slate-600">Revisa las piezas configuradas. Puedes quitar una y volver a Medidas para agregar otra.</p>
+            <aside id="carrito" class="card mt-4 overflow-hidden" aria-label="Mi lista de piezas">
+              <header class="flex items-center justify-between border-b border-slate-200 px-5 py-4">
+                <div>
+                  <p class="text-base font-bold uppercase tracking-wide text-slate-600">3 · Tu resumen técnico</p>
+                  <h3 class="mt-0.5 text-xl font-extrabold text-navy">Piezas configuradas</h3>
+                </div>
+                <span id="carrito-contador" class="badge measure bg-amber-100 text-base text-amber-800">0 ítems</span>
+              </header>
+              <div id="carrito-confirmado"></div>
+              <ul id="carrito-lista" class="max-h-[420px] divide-y divide-slate-100 overflow-y-auto"></ul>
+              <footer class="border-t border-slate-200 bg-slate-50 px-5 py-4">
+                <div class="flex items-baseline justify-between">
+                  <span class="text-lg font-semibold text-slate-700">Largo total acumulado</span>
+                  <span id="carrito-total" class="precio-total">0 Mts</span>
+                </div>
+                <p id="carrito-nota" class="mt-1 text-base text-slate-600"></p>
+                <button type="button" id="btn-cotizacion-pdf" class="btn-dark mt-4 min-h-12 w-full text-lg" data-action="ir-datos">Continuar a mis datos</button>
+                <button type="button" class="btn-outline mt-3 min-h-12 w-full text-lg" data-action="ir-paso" data-paso="medidas">Seguir armando</button>
+                <p class="mt-2 text-base text-slate-600">Cálculo de desarrollo (CM.D) y tiras de corte de 3 m. No necesitas una cuenta.</p>
+                <div id="cotizaciones-guardadas" class="mt-3 space-y-1 text-lg"></div>
+                <aside class="mt-4 rounded-lg border border-slate-300 bg-white p-4" aria-label="Vista previa de la orden">
+                  <p class="text-lg font-bold text-navy">Vista previa</p>
+                  <p class="mt-2 text-lg">Folio <span id="resumen-folio" class="measure font-bold">—</span> · vigencia 15 días</p>
+                  <p class="mt-1 text-lg">Resumen <span id="resumen-total" class="measure font-bold">0 Mts</span></p>
+                  <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+                    <button type="button" class="btn-outline min-h-12 text-lg" data-action="enviar-taller">Enviar al taller</button>
+                    <a id="resumen-pdf" class="btn-primary min-h-12 text-lg" href="cotizacion.html">Descargar PDF</a>
+                  </div>
+                </aside>
+              </footer>
+            </aside>
+          </div>
+
+          <div id="paso-datos" class="mt-8 motion-safe:animate-fade-in" hidden>
+            <div class="card p-5 sm:p-7">
+              <h3 id="cotizacion-titulo" class="text-2xl font-extrabold text-navy">Mis datos</h3>
+              <form id="form-cotizacion-pdf" class="mt-4 space-y-4" novalidate>
+                <p class="text-lg">Nombre y teléfono bastan. Se abrirá una ficha técnica de corte que puedes guardar como PDF. Los campos con * son obligatorios.</p>
+                <div>
+                  <label for="cotizacion-nombre" class="mb-1.5 block text-lg font-semibold text-slate-800">Nombre o razón social *</label>
+                  <input id="cotizacion-nombre" name="nombre_cliente" class="input min-h-12 text-lg" autocomplete="name" required maxlength="500" aria-describedby="cotizacion-error-nombre_cliente">
+                  <p id="cotizacion-error-nombre_cliente" class="mt-1 text-base font-medium text-red-700" aria-live="polite"></p>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label for="cotizacion-telefono" class="mb-1.5 block text-lg font-semibold text-slate-800">Teléfono *</label>
+                    <input id="cotizacion-telefono" name="telefono" type="tel" class="input min-h-12 text-lg" autocomplete="tel" required maxlength="25" placeholder="+56 9 1234 5678" aria-describedby="cotizacion-error-telefono">
+                    <p id="cotizacion-error-telefono" class="mt-1 text-base font-medium text-red-700" aria-live="polite"></p>
+                  </div>
+                  <div>
+                    <label for="cotizacion-correo" class="mb-1.5 block text-lg font-semibold text-slate-800">Correo (opcional)</label>
+                    <input id="cotizacion-correo" name="correo" type="email" class="input min-h-12 text-lg" autocomplete="email" maxlength="500" aria-describedby="cotizacion-error-correo">
+                    <p id="cotizacion-error-correo" class="mt-1 text-base font-medium text-red-700" aria-live="polite"></p>
+                  </div>
+                </div>
+                <div>
+                  <label for="cotizacion-trabajo" class="mb-1.5 block text-lg font-semibold text-slate-800">¿Qué necesitas? *</label>
+                  <textarea id="cotizacion-trabajo" name="trabajo_solicitado" class="input min-h-12 text-lg" rows="2" required maxlength="500" aria-describedby="cotizacion-error-trabajo_solicitado" placeholder="Ej.: Cambio de canaletas y bajadas"></textarea>
+                  <p id="cotizacion-error-trabajo_solicitado" class="mt-1 text-base font-medium text-red-700" aria-live="polite"></p>
+                </div>
+                <label class="hidden"><input name="necesita_factura" type="checkbox">Datos adicionales</label>
+                <p id="cotizacion-ayuda-factura" class="text-base">RUT, dirección y comuna son opcionales para completar la ficha técnica de tu obra.</p>
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label for="cotizacion-rut" class="mb-1.5 block text-lg font-semibold text-slate-800">RUT (opcional)</label>
+                    <input id="cotizacion-rut" name="rut_cliente" class="input min-h-12 text-lg" maxlength="12" placeholder="12.345.678-5" aria-describedby="cotizacion-ayuda-factura cotizacion-error-rut_cliente">
+                    <p id="cotizacion-error-rut_cliente" class="mt-1 text-base font-medium text-red-700" aria-live="polite"></p>
+                  </div>
+                  <div>
+                    <label for="cotizacion-giro" class="mb-1.5 block text-lg font-semibold text-slate-800">Giro (opcional)</label>
+                    <input id="cotizacion-giro" name="giro" class="input min-h-12 text-lg" maxlength="500" aria-describedby="cotizacion-error-giro">
+                    <p id="cotizacion-error-giro" class="mt-1 text-base font-medium text-red-700" aria-live="polite"></p>
+                  </div>
+                  <div>
+                    <label for="cotizacion-direccion" class="mb-1.5 block text-lg font-semibold text-slate-800">Dirección (opcional)</label>
+                    <input id="cotizacion-direccion" name="direccion" class="input min-h-12 text-lg" autocomplete="street-address" maxlength="500" aria-describedby="cotizacion-ayuda-factura cotizacion-error-direccion">
+                    <p id="cotizacion-error-direccion" class="mt-1 text-base font-medium text-red-700" aria-live="polite"></p>
+                  </div>
+                  <div>
+                    <label for="cotizacion-comuna" class="mb-1.5 block text-lg font-semibold text-slate-800">Comuna (opcional)</label>
+                    <input id="cotizacion-comuna" name="comuna" class="input min-h-12 text-lg" autocomplete="address-level3" maxlength="500" aria-describedby="cotizacion-ayuda-factura cotizacion-error-comuna">
+                    <p id="cotizacion-error-comuna" class="mt-1 text-base font-medium text-red-700" aria-live="polite"></p>
+                  </div>
+                </div>
+                <p id="cotizacion-resumen" class="rounded-lg bg-slate-100 p-3 text-lg font-semibold"></p>
+                <p id="cotizacion-error-items" class="mt-1 text-base font-medium text-red-700" aria-live="polite"></p>
+                <p id="cotizacion-estado" class="text-lg" role="status" aria-live="polite"></p>
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <button type="button" class="btn-outline min-h-12 text-lg" data-action="ir-paso" data-paso="cotizacion">Volver a mi lista</button>
+                  <button type="submit" class="btn-primary min-h-12 text-lg">Guardar ficha técnica</button>
+                </div>
+                <p class="text-base text-slate-600">Se guarda solo en este navegador.</p>
+              </form>
+            </div>
+          </div>
+
+          <div id="paso-lista" class="mt-8 motion-safe:animate-fade-in" hidden>
+            <div class="card p-5 sm:p-7">
+              <h3 class="text-2xl font-extrabold text-navy">Tu ficha técnica está lista</h3>
+              <p class="mt-3 text-lg">Folio <span id="lista-folio" class="measure font-bold text-navy">—</span> · vigencia 15 días</p>
+              <p class="mt-2 flex items-baseline gap-2 text-lg">Resumen <span id="lista-total" class="precio-total">—</span></p>
+              <p id="lista-que-pasa" class="mt-3 text-lg"></p>
+              <p class="mt-3 text-lg">La ficha de medidas, ángulos y cortes quedó guardada en este navegador.</p>
+              <section id="lista-sigue" class="mt-5" aria-labelledby="lista-sigue-titulo">
+                <h4 id="lista-sigue-titulo" class="text-xl font-extrabold text-navy">Qué sigue</h4>
+                <ol class="mt-2 list-decimal space-y-1 pl-5 text-lg">
+                  <li>Guarda o imprime el resumen. El número queda en este navegador.</li>
+                  <li>El taller revisa las medidas, ángulos y desarrollos.</li>
+                  <li>El retiro es en el taller, en Pje. Edmundo Lobos, Puerto Montt.</li>
+                </ol>
+              </section>
+              <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+                <button type="button" class="btn-outline min-h-12 text-lg" data-action="enviar-taller">Enviar al taller</button>
+                <button type="button" class="btn-outline min-h-12 text-lg" data-action="imprimir-resumen">Imprimir resumen</button>
+                <a id="lista-pdf" class="btn-primary min-h-12 text-lg" href="cotizacion.html">Descargar PDF</a>
+                <button type="button" class="btn-outline min-h-12 text-lg" data-action="ir-paso" data-paso="medidas">Seguir armando</button>
+              </div>
+              <aside id="lista-vista" class="mt-5 rounded-lg border border-slate-300 bg-slate-50 p-4" aria-label="Vista previa">
+                <p class="text-lg font-bold text-navy">Vista previa</p>
+                <ul id="lista-vista-items" class="mt-2 space-y-1 text-lg"></ul>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Catálogo educativo -->
+      <section id="catalogo" class="bg-white py-20 text-slate-700" aria-labelledby="catalogo-titulo">
+        <div class="mx-auto max-w-7xl px-4">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p class="eyebrow-light text-base">Catálogo · Perfiles estándar</p>
+              <h2 id="catalogo-titulo" class="section-title mt-3">Conoce cada perfil y su geometría base.</h2>
+              <p class="mt-3 max-w-2xl text-slate-600">Medidas y ángulos de referencia en 0.4 y 0.5 mm. Ajusta las medidas y los grados de inclinación de cada lado en la mesa de configuración.</p>
+            </div>
+          </div>
+          <div class="diagrama-casa mt-8" aria-labelledby="diagrama-casa-titulo">
+            <h3 id="diagrama-casa-titulo" class="text-xl font-extrabold text-navy">¿Dónde va cada lata?</h3>
+            <div class="diagrama-casa-lienzo">
+              <svg viewBox="0 0 320 180" aria-hidden="true">
+                <path d="M48 96 160 28l112 68" fill="none" stroke="#1E293B" stroke-width="3"/>
+                <path d="M64 96v58h192V96" fill="#f8fafc" stroke="#1E293B" stroke-width="3"/>
+                <path d="M36 102h120" stroke="#D97706" stroke-width="7" stroke-linecap="round"/>
+                <path d="M148 34l24 16" stroke="#D97706" stroke-width="7" stroke-linecap="round"/>
+                <path d="M236 102h72" stroke="#D97706" stroke-width="7" stroke-linecap="round"/>
+              </svg>
+              <button type="button" class="hotspot hotspot-cumbrera" data-action="filtrar-catalogo" data-zona="techo">Cumbrera</button>
+              <button type="button" class="hotspot hotspot-canaleta" data-action="filtrar-catalogo" data-zona="alero">Canaleta</button>
+              <button type="button" class="hotspot hotspot-forro" data-action="filtrar-catalogo" data-zona="alero">Forro</button>
+            </div>
+          </div>
+          <div class="mt-8 max-w-xl">
+            <label for="catalogo-buscar" class="block text-lg font-semibold text-navy">Buscar pieza</label>
+            <input id="catalogo-buscar" class="input mt-2 min-h-12 w-full text-lg" type="search" placeholder="Nombre, forro o cortagotera" autocomplete="off">
+          </div>
+          <div id="catalogo-filtros" role="group" aria-label="Filtrar piezas por zona" class="mt-8 flex flex-wrap gap-2"></div>
+          <p id="catalogo-conteo" class="mt-3 min-h-[1.5em] text-base text-slate-600" aria-live="polite"></p>
+          <template id="ficha-perfil">
+            <article class="card card-vida group flex flex-col">
+              <div class="catalogo-lamina h-52 overflow-hidden rounded-t-xl border-b border-slate-200 bg-slate-50 px-2 py-1"></div>
+              <div class="ficha-cuerpo flex flex-1 flex-col p-5"></div>
+            </article>
+          </template>
+          <div id="catalogo-grid" class="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+        </div>
+      </section>
+
+      <!-- Hero: diagnóstico de obra -->
+      <section id="inicio" class="relative overflow-hidden bg-slate-50 text-ink" aria-labelledby="hero-titulo">
+        <div class="mx-auto grid max-w-7xl items-center gap-10 px-4 py-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-12 lg:py-12">
+          <div>
+            <p class="inline-flex items-center gap-2 rounded border border-amber-600/40 bg-amber-50 px-2.5 py-1.5 font-mono text-base font-semibold leading-snug tracking-[0.12em] text-amber-800">
+              <span class="h-2 w-2 shrink-0 bg-amber-400" aria-hidden="true"></span>
+              TALLER DE PLEGADOS COLEGUAL · PUERTO MONTT / OBRA Y VIVIENDA
+            </p>
+            <h2 id="hero-titulo" class="mt-5 text-4xl font-black leading-[1.05] tracking-tight text-navy sm:text-5xl xl:text-[3.5rem]">¿Qué parte de tu techo o muro necesitas forrar hoy?</h2>
+            <p class="mt-5 max-w-xl text-lg leading-relaxed text-slate-700">
+              Olvídate de las latas estándar de ferretería que quedan cortas y filtran. Doblamos planchas de 3 metros en 0.4 y 0.5 mm con los centímetros exactos que pide tu obra.
+            </p>
+
+            <div class="mt-8 grid max-w-xl gap-3 sm:grid-cols-2">
+              <button type="button" class="btn-primary text-base justify-start gap-3 px-4 py-3 text-left" data-action="ir-medidas">
+                <span class="leading-none" aria-hidden="true"><svg class="h-7 w-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2" y="8" width="20" height="8" rx="1"/><path d="M6 8v3M10 8v4M14 8v3M18 8v4"/></svg></span>
+                <span>
+                  <span class="block text-base font-bold">Ya tengo mis medidas</span>
+                  <span class="block text-lg font-medium text-ink">Ir directo a calcular desarrollo</span>
+                </span>
+              </button>
+              <button type="button" class="btn-outline text-base justify-start gap-3 px-4 py-3 text-left" data-action="ir-mapa">
+                <span class="leading-none text-navy" aria-hidden="true"><svg class="h-7 w-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span>
+                <span>
+                  <span class="block text-base font-bold text-navy">No estoy seguro qué perfil usar</span>
+                  <span class="block text-lg font-medium text-slate-700">Toca el esquema <span class="lg:hidden">de abajo</span><span class="hidden lg:inline">de la derecha</span></span>
+                </span>
+              </button>
+            </div>
+
+            <ul class="mt-8 grid max-w-xl gap-4 border-t border-slate-200 pt-6 text-lg leading-snug text-slate-700 sm:grid-cols-3">
+              <li class="flex items-start gap-2.5">
+                <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-amber-800" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="8" width="20" height="8" rx="1" /><path d="M6 8v3M10 8v4M14 8v3M18 8v4" />
+                </svg>
+                <span>Tiras de 3 mts en 0.4 y 0.5 mm</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-amber-800" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 7v10M21 7v10M3 12h18" /><path d="M6 9.5 3 12l3 2.5M18 9.5l3 2.5-3 2.5" />
+                </svg>
+                <span>Cálculo exacto de cm de desarrollo (<span class="measure">CM.D</span>) y ángulos</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg viewBox="0 0 24 24" class="h-5 w-5 shrink-0 text-amber-800" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="5" width="18" height="16" rx="2" /><path d="M3 10h18M8 3v4M16 3v4M8 14h3M8 17h3" />
+                </svg>
+                <span>Retiro en taller: Pje. Edmundo Lobos 5507294, 5480000 Puerto Montt, Los Lagos (plus code G2WX+9J). Horario: Por confirmar.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card overflow-hidden">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-slate-200 px-4 py-3">
+              <h2 class="text-base font-extrabold text-navy">¿Dónde va cada lata?</h2>
+              <p class="text-lg text-slate-700">Gira la casa en 3D y toca un pin (1 al 7) o la pieza</p>
+            </div>
+            <div id="mapa-obra" class="relative mx-3 mt-3 overflow-hidden rounded-lg bg-slate-100 ring-1 ring-slate-200 transition sm:mx-4 sm:mt-4" role="group" aria-label="Modelo 3D de la casa donde va cada perfil">
+              <picture><source type="image/avif" srcset="static/img/vivienda-dos-pisos-800.avif?v=1 800w"><img src="static/img/vivienda-dos-pisos-800.webp?v=1" alt="Foto provisoria de una vivienda con hojalatería, mientras carga el modelo 3D" class="block aspect-video h-auto w-full object-cover object-center" width="800" height="450" loading="lazy" decoding="async"></picture>
+              <div class="pointer-events-none absolute inset-x-3 bottom-3 rounded-md bg-white/95 p-3 ring-1 ring-slate-300">
+                <p class="text-base font-semibold text-navy">Cargando la casa 3D…</p>
+                <div class="mt-2 h-2 overflow-clip rounded-full bg-slate-700" role="progressbar" aria-label="Cargando la casa 3D" aria-valuemin="0" aria-valuemax="100" aria-valuetext="Cargando la casa 3D">
+                  <span class="casa-carga block h-full w-1/3 rounded-full bg-accent"></span>
+                </div>
+              </div>
+            </div>
+            <div id="mapa-respuesta" class="m-3 min-h-[8.5rem] rounded-lg border border-slate-200 bg-white p-4 sm:m-4" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiénes somos: ficha del taller -->
+      <section id="nosotros" class="bg-white py-20 text-slate-700" aria-labelledby="nosotros-titulo">
+        <div class="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+          <div>
+            <p class="eyebrow-light text-base">Quiénes somos</p>
+            <h2 id="nosotros-titulo" class="section-title mt-3">Antes cotizábamos en papel. Ahora lo haces tú.</h2>
+            <p class="mt-5 text-lg leading-relaxed">
+              Somos el taller de plegados de <strong class="text-navy">Constructora Colegual SpA</strong>, un negocio familiar de Puerto Montt.
+              Doblamos cumbreras, canaletas, cortagoteras, esquineros y remates para casas, galpones y obras.
+            </p>
+            <p class="mt-4 leading-relaxed text-slate-600">
+              Hasta ahora, cada pedido se calculaba a mano en papel.
+            </p>
+            <p class="mt-4 leading-relaxed text-slate-600">
+              Abrimos esta herramienta para que cualquier cliente o maestro arme su orden de corte exacta: anotas los centímetros y el ángulo de cada lado,
+              ves el desarrollo (<span class="measure">CM.D</span>) y el desglose de tiras de 3 m, y la orden queda lista para cortar y plegar.
+            </p>
+            <a href="#cotizador" class="btn-primary mt-7 px-5 py-3 text-base">Armar mi orden de corte</a>
+          </div>
+
+          <article class="overflow-hidden rounded-xl border-2 border-navy bg-white shadow-sm" aria-labelledby="ficha-taller-titulo">
+            <div class="bg-hazard h-1.5"></div>
+            <header class="flex items-center justify-between gap-3 border-b-2 border-dashed border-slate-200 px-6 py-4">
+              <div>
+                <p class="field-label text-base mb-0">Ficha de taller familiar</p>
+                <h3 id="ficha-taller-titulo" class="text-lg font-extrabold text-navy">Plegados Colegual</h3>
+              </div>
+              <span class="badge text-base bg-navy text-amber-400">Puerto Montt</span>
+            </header>
+            <dl class="divide-y divide-dashed divide-slate-200 px-6 text-lg">
+              <div class="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 py-3">
+                <dt class="field-label text-base mb-0 pt-0.5">Taller</dt>
+                <dd class="font-semibold text-navy">División de plegados de Constructora Colegual SpA</dd>
+              </div>
+              <div class="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 py-3">
+                <dt class="field-label text-base mb-0 pt-0.5">Trabajos</dt>
+                <dd class="text-navy">Hojalatería a medida para obra y vivienda</dd>
+              </div>
+              <div class="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 py-3">
+                <dt class="field-label text-base mb-0 pt-0.5">Plancha</dt>
+                <dd class="text-navy"><span class="measure">122 cm</span> de ancho, en tiras de <span class="measure">3 m</span></dd>
+              </div>
+              <div class="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 py-3">
+                <dt class="field-label text-base mb-0 pt-0.5">Espesores</dt>
+                <dd class="text-navy"><span class="measure">0.4</span> y <span class="measure">0.5 mm</span>, Zincalum o prepintada</dd>
+              </div>
+              <div class="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 py-3">
+                <dt class="field-label text-base mb-0 pt-0.5">Entregas</dt>
+                <dd class="text-navy">Retiro en taller: Pje. Edmundo Lobos 5507294, 5480000 Puerto Montt, Los Lagos (plus code G2WX+9J). Horario: Por confirmar.</dd>
+              </div>
+              <div class="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 py-3">
+                <dt class="field-label text-base mb-0 pt-0.5">Antes</dt>
+                <dd class="text-slate-500">Cálculo en papel</dd>
+              </div>
+              <div class="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3 py-3">
+                <dt class="field-label text-base mb-0 pt-0.5">Ahora</dt>
+                <dd class="font-semibold text-navy">Tu orden de corte, armada por ti con cálculo geométrico al instante</dd>
+              </div>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+      <!-- Mis boletas y seguimiento (solo cuenta de cliente) -->
+      <section id="seguimiento" class="hidden bg-navy py-20" aria-labelledby="boletas-titulo" data-solo-demo hidden>
+        <div class="mx-auto max-w-7xl px-4">
+          <div class="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p class="eyebrow text-base">Mis pedidos</p>
+              <h2 id="boletas-titulo" class="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Mi Cuenta · Mis Boletas y Pedidos</h2>
+              <p id="boletas-subtitulo" class="mt-3 max-w-xl text-slate-400"></p>
+            </div>
+            <div id="boletas-cliente"></div>
+          </div>
+          <div id="boletas-contenido" class="mt-8"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Página dedicada: Zona Administrativa del Cliente (Dashboard de 4 módulos) -->
+    <div id="vista-cuenta" class="fondo-chapa hidden min-h-[75vh] bg-slate-100"></div>
+
+    <footer class="border-t border-slate-700 bg-navy py-10 text-lg text-slate-300">
+      <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-8 gap-y-4 px-4">
+        <p><a href="index.html" class="font-bold text-white hover:text-amber-300">Colegual SpA</a> · Constructora & Hojalatería · Puerto Montt</p>
+        <ul class="flex flex-wrap gap-x-6 gap-y-2">
+          <li><a class="hover:text-white" href="index.html">Portada</a></li>
+          <li><a class="hover:text-white" href="#catalogo">Catálogo</a></li>
+          <li><a class="hover:text-white" href="#cotizador">Cotizador</a></li>
+          <li><a class="hover:text-white" href="index.html#contacto">Contacto</a></li>
+        </ul>
+        <p class="w-full text-lg">Teléfono: <a id="footer-telefono" class="font-semibold text-white underline" href="tel:+56998487715">+56 9 9848 7715</a> · <a id="footer-telefono-2" class="font-semibold text-white underline" href="tel:+56991902967">+56 9 9190 2967</a></p>
+        <p class="measure w-full border-t border-slate-700 pt-4 text-base text-slate-400">Calculador geométrico de desarrollo y cortes de hojalatería. Horario: Por confirmar. Dirección: Pje. Edmundo Lobos 5507294, 5480000 Puerto Montt, Los Lagos (plus code G2WX+9J).</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ============================== VISTA 2: PANEL DEL TALLER ============================== -->
+  <div id="vista-taller" class="hidden min-h-screen bg-slate-100 text-ink">
+    <main class="mx-auto max-w-[1600px] px-4 py-8">
+      <section id="taller-bandeja" class="scroll-mt-24" aria-labelledby="titulo-bandeja">
+        <h2 id="titulo-bandeja" class="sr-only">Bandeja</h2>
+        <div id="taller-bandeja-contenido"></div>
+      </section>
+      <section id="taller-abastecimiento" class="mt-10 scroll-mt-24" aria-labelledby="titulo-abastecimiento">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p class="text-base font-bold uppercase tracking-wide text-amber-800">Demostración</p>
+            <h2 id="titulo-abastecimiento" class="mt-2 text-2xl font-extrabold text-navy">Lote y tablero</h2>
+          </div>
+          <p class="measure text-base text-slate-600">Plancha estándar 122 × 300 cm · tiras de 3 m</p>
+        </div>
+        <div class="mt-5 space-y-5">
+          <div id="taller-lote"></div>
+          <div id="taller-consolidado" class="grid gap-5 md:grid-cols-3"></div>
+        </div>
+      </section>
+
+      <div id="taller-especiales" class="hidden"></div>
+
+      <section class="mt-10" aria-labelledby="titulo-kanban">
+        <div class="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 id="titulo-kanban" class="text-2xl font-extrabold text-navy">Tablero de pedidos</h2>
+          </div>
+          <p class="text-base text-slate-700">El cliente ve la misma etapa en su cuenta. Volver atrás pide confirmación en el botón de la tarjeta. Toca un pedido en corte y plegado para abrir la ficha.</p>
+        </div>
+        <div id="taller-kanban" class="mt-5 grid gap-4 md:grid-cols-2 2xl:grid-cols-4"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Página: No sé cómo se llama -->
+  <section id="no-se" class="pagina-propia fondo-chapa bg-slate-50 text-ink" hidden aria-labelledby="no-se-titulo">
+    <div class="mx-auto max-w-5xl px-4 py-8 sm:py-12">
+      <p class="eyebrow-light text-base">Hojalatería</p>
+      <h2 id="no-se-titulo" class="section-title mt-3">¿Dónde está el problema?</h2>
+      <p class="mt-3 text-lg text-slate-600">Elige el dibujo que más se parece. Te decimos qué pieza necesitas.</p>
+      <div id="no-se-opciones" class="mt-6 grid gap-4 sm:grid-cols-2"></div>
+      <p class="mt-4 text-lg text-slate-600">¿Sigues con dudas? Escríbenos a <a class="font-semibold text-navy underline" href="mailto:colegualspasoporte@gmail.com">colegualspasoporte@gmail.com</a>. Ese correo es provisional.</p>
+      <div id="no-se-resultado" class="mt-5 rounded-lg border border-amber-300 bg-amber-50 p-4" tabindex="-1">
+        <p class="text-base font-semibold uppercase tracking-wide text-amber-800">Te sugerimos</p>
+        <p id="no-se-nombre" class="mt-1 text-2xl font-extrabold text-navy">Elige un dibujo</p>
+        <p id="no-se-detalle" class="mt-1 text-lg text-slate-700">Te decimos el nombre de la pieza.</p>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+          <button type="button" id="no-se-cotizar" class="btn-primary min-h-12 text-lg" data-action="cotizar-diagnostico" disabled>Cotizar esta pieza</button>
+          <a class="btn-outline min-h-12 text-lg" href="#catalogo">Ver todas las piezas</a>
+          <button type="button" class="btn-outline min-h-12 text-lg" data-action="cerrar-no-se">Volver a medidas</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solicitud especial: solo local, sin precio automático ni envío de archivos. -->
+  <section id="modal-especial" class="pagina-propia bg-slate-50 text-slate-700" hidden aria-labelledby="especial-titulo" aria-describedby="especial-aviso">
+    <header class="bg-navy px-5 py-5 text-white sm:px-7">
+      <h2 id="especial-titulo" class="text-xl font-extrabold sm:text-2xl">Pieza especial</h2>
+      <p class="mt-2 text-lg text-slate-300">Cuéntanos qué necesitas fabricar. No necesitas tener todas las medidas exactas.</p>
+    </header>
+    <div class="mx-auto grid max-w-5xl gap-6 p-5 lg:grid-cols-[minmax(0,1fr)_16rem] sm:p-7">
+      <div>
+      <div id="especial-aviso" class="rounded-lg border border-amber-300 bg-amber-50 p-4 text-lg text-amber-950">
+        <p class="font-semibold">El taller revisará tu solicitud técnica de pieza especial.</p>
+        <p class="mt-1">En esta demostración, la solicitud queda guardada en tu navegador.</p>
+      </div>
+      <form id="form-especial" class="mt-6 space-y-5" novalidate>
+        <p class="text-base text-slate-500">Los campos marcados con * son obligatorios.</p>
+        <div>
+          <label for="especial-descripcion" class="field-label text-base">Descripción de la pieza *</label>
+          <textarea id="especial-descripcion" name="descripcion" class="input min-h-28 text-base" rows="3" required maxlength="2000" aria-describedby="especial-error-descripcion" placeholder="Ej.: Necesito una canaleta para un galpón, con desarrollo aproximado de 150 cm."></textarea>
+          <p id="especial-error-descripcion" class="mt-1 text-lg text-red-700"></p>
+        </div>
+        <fieldset>
+          <legend class="field-label text-base">Medidas aproximadas (opcional)</legend>
+          <p id="especial-ayuda-medidas" class="mb-3 text-lg text-slate-500">En centímetros. Completa las que sepas; puedes detallar los pliegues en la descripción.</p>
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div>
+              <label for="especial-largo" class="field-label text-base">Largo (cm)</label>
+              <input id="especial-largo" name="largo" type="text" inputmode="decimal" class="input text-base" maxlength="20" aria-describedby="especial-ayuda-medidas especial-error-largo" placeholder="Ej.: 300">
+              <p id="especial-error-largo" class="mt-1 text-lg text-red-700"></p>
+            </div>
+            <div>
+              <label for="especial-ancho" class="field-label text-base">Ancho / desarrollo (cm)</label>
+              <input id="especial-ancho" name="ancho" type="text" inputmode="decimal" class="input text-base" maxlength="20" aria-describedby="especial-ayuda-medidas especial-error-ancho" placeholder="Ej.: 150">
+              <p id="especial-error-ancho" class="mt-1 text-lg text-red-700"></p>
+            </div>
+            <div>
+              <label for="especial-alto" class="field-label text-base">Alto (cm)</label>
+              <input id="especial-alto" name="alto" type="text" inputmode="decimal" class="input text-base" maxlength="20" aria-describedby="especial-ayuda-medidas especial-error-alto" placeholder="Ej.: 20,5">
+              <p id="especial-error-alto" class="mt-1 text-lg text-red-700"></p>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend class="field-label text-base">Ángulo especial (opcional)</legend>
+          <p id="especial-ayuda-angulo" class="mb-3 text-lg text-slate-500">En grados. Si no lo sabes, déjalo vacío.</p>
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div>
+              <label for="especial-angulo-1" class="field-label text-base">Doblez 1</label>
+              <input id="especial-angulo-1" name="angulo_1" type="text" inputmode="decimal" class="input text-lg" maxlength="10" aria-describedby="especial-ayuda-angulo especial-error-angulo_1" placeholder="Ej.: 90">
+              <p id="especial-error-angulo_1" class="mt-1 text-lg text-red-700"></p>
+            </div>
+            <div>
+              <label for="especial-angulo-2" class="field-label text-base">Doblez 2</label>
+              <input id="especial-angulo-2" name="angulo_2" type="text" inputmode="decimal" class="input text-lg" maxlength="10" aria-describedby="especial-ayuda-angulo especial-error-angulo_2" placeholder="Ej.: 45">
+              <p id="especial-error-angulo_2" class="mt-1 text-lg text-red-700"></p>
+            </div>
+            <div>
+              <label for="especial-angulo-3" class="field-label text-base">Doblez 3</label>
+              <input id="especial-angulo-3" name="angulo_3" type="text" inputmode="decimal" class="input text-lg" maxlength="10" aria-describedby="especial-ayuda-angulo especial-error-angulo_3">
+              <p id="especial-error-angulo_3" class="mt-1 text-lg text-red-700"></p>
+            </div>
+          </div>
+        </fieldset>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="especial-cantidad" class="field-label text-base">Cantidad *</label>
+            <input id="especial-cantidad" name="cantidad" type="text" inputmode="decimal" class="input text-base" required maxlength="20" aria-describedby="especial-error-cantidad" placeholder="Ej.: 2">
+            <p id="especial-error-cantidad" class="mt-1 text-lg text-red-700"></p>
+          </div>
+          <div>
+            <label for="especial-unidad" class="field-label text-base">Unidad *</label>
+            <select id="especial-unidad" name="unidad" class="input min-h-12 text-base" required aria-describedby="especial-error-unidad">
+              <option value="unidades">Unidades (piezas)</option><option value="metros">Metros lineales</option>
+            </select>
+            <p id="especial-error-unidad" class="mt-1 text-lg text-red-700"></p>
+          </div>
+          <div>
+            <label for="especial-material" class="field-label text-base">Material</label>
+            <select id="especial-material" name="material" class="input min-h-12 text-base" aria-describedby="especial-error-material"></select>
+            <p id="especial-error-material" class="mt-1 text-lg text-red-700"></p>
+          </div>
+          <div>
+            <label for="especial-espesor" class="field-label text-base">Espesor</label>
+            <select id="especial-espesor" name="espesor" class="input min-h-12 text-base" aria-describedby="especial-error-espesor"></select>
+            <p id="especial-error-espesor" class="mt-1 text-lg text-red-700"></p>
+          </div>
+        </div>
+        <div>
+          <label for="especial-adjunto" class="field-label text-base">Foto o croquis (opcional)</label>
+          <input id="especial-adjunto" name="adjunto" type="file" accept="image/jpeg,image/png,image/webp" class="input min-h-12 text-base file:mr-3 file:rounded file:border-0 file:bg-slate-100 file:px-3 file:py-2" aria-describedby="especial-ayuda-adjunto especial-error-adjunto">
+          <p id="especial-ayuda-adjunto" class="mt-2 text-base text-slate-500">JPG, PNG o WebP, hasta 5 MB. Solo vista previa: la imagen no se guarda ni se envía.</p>
+          <p id="especial-error-adjunto" class="mt-1 text-lg text-red-700" aria-live="polite"></p>
+          <figure id="especial-preview" class="mt-3 hidden rounded-lg border border-slate-200 p-3">
+            <img id="especial-imagen" class="mx-auto max-h-52 max-w-full object-contain" alt="Vista previa de la foto o croquis seleccionado" width="320" height="208">
+            <figcaption id="especial-archivo-nombre" class="mt-2 break-words text-base text-slate-500"></figcaption>
+          </figure>
+          <button type="button" id="especial-quitar-adjunto" class="btn-outline text-base mt-3 hidden min-h-12" data-action="quitar-adjunto-especial">Quitar archivo</button>
+        </div>
+        <fieldset class="space-y-4 border-t border-slate-200 pt-4">
+          <legend class="font-bold text-navy">Datos de contacto</legend>
+          <div>
+            <label for="especial-nombre" class="field-label text-base">Nombre *</label>
+            <input id="especial-nombre" name="nombre" type="text" class="input text-base" required maxlength="100" autocomplete="name" aria-describedby="especial-error-nombre">
+            <p id="especial-error-nombre" class="mt-1 text-lg text-red-700"></p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="especial-telefono" class="field-label text-base">Teléfono *</label>
+              <input id="especial-telefono" name="telefono" type="tel" class="input text-base" required maxlength="25" autocomplete="tel" placeholder="+56 9 1234 5678" aria-describedby="especial-error-telefono">
+              <p id="especial-error-telefono" class="mt-1 text-lg text-red-700"></p>
+            </div>
+            <div>
+              <label for="especial-comuna" class="field-label text-base">Comuna *</label>
+              <input id="especial-comuna" name="comuna" type="text" class="input text-base" required maxlength="100" autocomplete="address-level3" placeholder="Ej.: Puerto Montt" aria-describedby="especial-error-comuna">
+              <p id="especial-error-comuna" class="mt-1 text-lg text-red-700"></p>
+            </div>
+          </div>
+        </fieldset>
+        <p id="especial-estado-form" class="text-lg text-red-700" role="alert"></p>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <button type="button" class="btn-outline min-h-12 py-3 text-base" data-action="cerrar-especial">Volver al cotizador</button>
+          <button type="submit" class="btn-primary min-h-12 py-3 text-lg">Agregar a mi cotización</button>
+        </div>
+      </form>
+      <section id="especial-confirmacion" class="mt-6 hidden rounded-lg border border-emerald-300 bg-emerald-50 p-5 text-emerald-950" tabindex="-1" aria-labelledby="especial-confirmacion-titulo" aria-live="polite">
+        <h3 id="especial-confirmacion-titulo" class="text-lg font-bold">Pieza especial registrada</h3>
+        <p class="mt-2 text-base">Esta solicitud quedó guardada en este navegador para revisión técnica del taller.</p>
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <button type="button" class="btn-primary min-h-12 py-3 text-lg" data-action="cerrar-especial">Volver a medidas</button>
+          <button type="button" class="btn-outline min-h-12 py-3 text-base" data-action="cerrar-especial">Cerrar</button>
+          <button type="button" class="btn-dark hidden min-h-12 py-3 text-base sm:col-span-2" data-action="ver-especiales" data-solo-demo hidden>Ver en Panel Taller</button>
+        </div>
+      </section>
+      </div>
+      <aside data-reveal class="h-fit rounded-lg border border-slate-300 bg-slate-50 p-4" aria-labelledby="especial-sigue">
+        <h3 id="especial-sigue" class="text-xl font-extrabold text-navy">Cómo sigue</h3>
+        <ol class="mt-3 list-decimal space-y-3 pl-5 text-lg">
+          <li>Describes la pieza, sus ángulos y las medidas que sepas.</li>
+          <li>La solicitud queda registrada en este navegador.</li>
+          <li>El taller revisa la geometría y factibilidad de plegado.</li>
+          <li>Si quieres apurarla, llama al <a class="font-bold text-navy underline" href="tel:+56998487715">+56 9 9848 7715</a> o al <a class="font-bold text-navy underline" href="tel:+56991902967">+56 9 9190 2967</a>.</li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Modal: Login / Registro (auth gate) -->
+  <section id="modal-auth" class="pagina-propia fondo-chapa bg-slate-50 text-slate-700" hidden aria-labelledby="auth-titulo">
+    <div class="mx-auto grid max-w-4xl items-start gap-6 px-4 py-8 sm:py-12 lg:grid-cols-[minmax(0,28rem)_minmax(0,1fr)] lg:gap-10">
+      <div class="card w-full max-w-md p-6 sm:p-8">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p class="inline-flex rounded-md bg-amber-100 px-2 py-1 text-base font-bold text-amber-800">Demostración</p>
+          <h2 id="auth-titulo" class="mt-2 text-[28px] font-extrabold leading-tight text-navy">Ingresar</h2>
+        </div>
+        <button type="button" class="inline-flex min-h-12 min-w-12 items-center justify-center rounded-md text-lg text-slate-700 hover:bg-slate-100" data-action="cerrar-auth" aria-label="Cerrar">✕</button>
+      </div>
+
+      <div id="auth-gate" class="mt-4 hidden rounded-lg border border-amber-300 bg-amber-50 p-3 text-lg text-amber-900">
+        <p class="font-semibold">Para hacer el pedido necesitas una cuenta.</p>
+        <p id="auth-gate-detalle" class="mt-1 text-amber-800"></p>
+      </div>
+      <p class="mt-4 text-lg text-slate-700">Para cotizar basta con tu nombre y tu teléfono. Para hacer el pedido, ingresas con tu correo y una contraseña: aceptas la cotización, ves la etapa y descargas el comprobante.</p>
+
+      <div class="mt-5 grid grid-cols-2 rounded-lg bg-slate-100 p-1" role="tablist">
+        <button type="button" class="min-h-12 rounded-md px-3 py-2 text-lg font-semibold text-slate-600 aria-selected:bg-white aria-selected:text-navy aria-selected:shadow" data-action="auth-tab" data-tab="login" role="tab" aria-selected="true">Ingresar</button>
+        <button type="button" class="min-h-12 rounded-md px-3 py-2 text-lg font-semibold text-slate-600 aria-selected:bg-white aria-selected:text-navy aria-selected:shadow" data-action="auth-tab" data-tab="registro" role="tab" aria-selected="false">Crear cuenta</button>
+      </div>
+
+      <form id="form-login" class="mt-5 space-y-4">
+        <label class="block"><span class="field-label text-base">Correo</span><input name="email" type="email" required class="input text-lg" value="jperez@correo.cl" autocomplete="email"></label>
+        <label class="block"><span class="field-label text-base">Contraseña</span><input name="password" type="password" required class="input text-lg" value="demo1234" autocomplete="current-password"></label>
+        <button type="submit" class="btn-primary min-h-12 w-full text-lg">Entrar</button>
+        <p class="text-center text-base text-slate-600">Demostración: correo y contraseña de ejemplo. Ingresas con tu correo y una contraseña. Solo presiona Entrar.</p>
+      </form>
+
+      <form id="form-registro" class="mt-5 hidden space-y-4">
+        <label class="block"><span class="field-label text-base">Nombre completo</span><input name="nombre" type="text" required class="input text-lg" placeholder="Ej: Juan Pérez Soto" autocomplete="name"></label>
+        <label class="block"><span class="field-label text-base">Teléfono</span><input name="telefono" type="tel" required class="input text-lg measure" placeholder="+56 9 1234 5678" autocomplete="tel"></label>
+        <label class="block"><span class="field-label text-base">Correo</span><input name="email" type="email" required class="input text-lg" placeholder="tu@correo.cl" autocomplete="email"></label>
+        <label class="block"><span class="field-label text-base">Contraseña</span><input name="password" type="password" required minlength="6" class="input text-lg" autocomplete="new-password"></label>
+        <button type="submit" class="btn-primary min-h-12 w-full py-3 text-lg">Crear cuenta y continuar</button>
+      </form>
+      </div>
+      <aside data-reveal class="h-fit lg:pt-4" aria-labelledby="auth-necesito">
+        <h3 id="auth-necesito" class="text-xl font-extrabold text-navy">¿Por qué crear cuenta?</h3>
+        <p class="mt-3 text-lg">Para cotizar basta con tu nombre y tu teléfono. La cuenta sirve para:</p>
+        <ul class="mt-4 space-y-4 text-lg">
+          <li class="flex items-start gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-accent-dark" aria-hidden="true"><svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4 4L19 6" /></svg></span>
+            <span class="pt-1.5">Aceptar la cotización.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-accent-dark" aria-hidden="true"><svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8" /><path d="M12 8v4l3 2" /></svg></span>
+            <span class="pt-1.5">Ver la etapa de tu pedido.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-100 text-accent-dark" aria-hidden="true"><svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-4-4 4 4 4-4M5 20h14" /></svg></span>
+            <span class="pt-1.5">Descargar el comprobante.</span>
+          </li>
+        </ul>
+        <p class="mt-5 text-lg text-slate-600">Ingresas con tu correo y una contraseña. Esta pantalla es una demostración.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Modal: Ficha de corte para taller (alto contraste) -->
+  <dialog id="detalle-pieza" class="max-h-[calc(100dvh-2rem)] w-[min(56rem,calc(100vw-2rem))] max-w-none overflow-y-auto rounded-xl bg-white p-0 text-slate-700 shadow-2xl" aria-labelledby="detalle-pieza-titulo"></dialog>
+  <dialog id="modal-ficha" class="m-0 h-screen max-h-none w-screen max-w-none bg-black p-0 text-white backdrop:bg-black" aria-label="Ficha de corte"></dialog>
+
+  <div id="toasts" class="pointer-events-none fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-4 right-4 z-[60] flex max-w-sm flex-col gap-2 sm:bottom-6 sm:left-6 sm:right-auto sm:w-96" aria-live="polite"></div>
+
+  <!-- Copia de la boleta seleccionada que se usa solo al imprimir -->
+  <div id="zona-impresion" aria-hidden="true"></div>
+
+  <script src="js/encabezado.js?v=3" defer></script>
+  <script src="js/portada-config.js?v=3" defer></script>
+  <script src="js/app.js?v=3" type="module"></script>
+</body>
+</html>

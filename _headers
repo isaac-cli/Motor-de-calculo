@@ -1,0 +1,16 @@
+/*
+	Strict-Transport-Security: max-age=31536000; includeSubDomains
+	X-Content-Type-Options: nosniff
+	Referrer-Policy: strict-origin-when-cross-origin
+	X-Frame-Options: DENY
+	Content-Security-Policy: frame-ancestors 'none'
+	Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+/static/img/*
+	Cache-Control: public, max-age=2592000
+
+/static/css/*
+	Cache-Control: public, max-age=0, must-revalidate
+
+/js/*
+	Cache-Control: public, max-age=0, must-revalidate

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+  (function () {
+    function atrapar(evento) {
+      var transicion = evento.viewTransition;
+      if (!transicion) return;
+      if (transicion.ready) transicion.ready.catch(function () {});
+      if (transicion.updateCallbackDone) transicion.updateCallbackDone.catch(function () {});
+      if (transicion.finished) transicion.finished.catch(function () {});
+    }
+    function esTransicion(razon) {
+      var mensaje = razon && typeof razon.message === "string" ? razon.message : (typeof razon === "string" ? razon : "");
+      return /view.?transition|Transition was skipped|skipped view/i.test(mensaje);
+    }
+    window.addEventListener("pagereveal", atrapar);
+    window.addEventListener("pageswap", atrapar);
+    window.addEventListener("unhandledrejection", function (evento) {
+      if (esTransicion(evento.reason)) evento.preventDefault();
+    });
+  })();
+  </script>
+  <style>
+  @view-transition { navigation: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition { navigation: none; }
+  }
+  </style>
+  <meta name="color-scheme" content="light">
+  <title>Colegual SpA · Constructora y hojalatería en Puerto Montt</title>
+  <meta name="description" content="Empresa familiar de Puerto Montt. Construcción, carpintería y hojalatería a medida. Cotiza tus perfiles o cuéntanos tu obra.">
+  <link rel="icon" href="static/img/logo.svg?v=1" type="image/svg+xml">
+  <link rel="icon" href="static/img/logo-192.png?v=1" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="static/img/logo-192.png?v=1">
+  <meta property="og:title" content="Colegual SpA · Constructora y hojalatería en Puerto Montt">
+  <meta property="og:description" content="Empresa familiar de Puerto Montt. Construcción, carpintería y hojalatería a medida. Cotiza tus perfiles o cuéntanos tu obra.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_CL">
+  <meta property="og:site_name" content="Colegual SpA">
+  <meta property="og:image" content="static/img/logo-512.png?v=1">
+  <meta property="og:image:alt" content="Logo de Colegual: casita azul sobre un cuadrado ámbar">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Colegual SpA",
+    "description": "Empresa familiar de Puerto Montt. Construcción, carpintería y hojalatería a medida.",
+    "telephone": ["+56998487715", "+56991902967"],
+    "email": "colegualspasoporte@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Pje. Edmundo Lobos 5507294",
+      "postalCode": "5480000",
+      "addressLocality": "Puerto Montt",
+      "addressRegion": "Los Lagos",
+      "addressCountry": "CL"
+    },
+    "areaServed": "Puerto Montt"
+  }
+  </script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2">
+  <style>
+    @font-face { font-family: Inter; font-style: normal; font-weight: 400 900; font-display: optional; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 800; font-display: optional; src: url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  </style>
+  <link rel="preload" as="image" type="image/avif" href="static/img/modulos-habilitados-800.avif?v=1" imagesrcset="static/img/modulos-habilitados-800.avif?v=1 800w, static/img/modulos-habilitados.avif?v=1 1600w" imagesizes="(max-width: 600px) calc(100vw - 36px), (max-width: 1300px) 46vw, 600px" fetchpriority="high">
+  <link rel="preload" as="image" href="static/img/modulos-habilitados.webp?v=1" imagesrcset="static/img/modulos-habilitados-800.webp?v=1 800w, static/img/modulos-habilitados.webp?v=1 1600w" imagesizes="(max-width: 600px) calc(100vw - 36px), (max-width: 1300px) 46vw, 600px" fetchpriority="high">
+  <link rel="stylesheet" href="static/css/styles.css?v=3">
+  <link rel="stylesheet" href="static/css/portada.css?v=3">
+  <link rel="stylesheet" href="static/css/encabezado.css?v=3">
+  <script type="speculationrules">
+{"prefetch":[{"eagerness":"moderate","urls":["index.html","cotizador.html","cotizacion.html"]}]}
+</script>
+  <script src="js/encabezado.js?v=3" defer></script>
+  <script src="js/portada-config.js?v=3" defer></script>
+  <script src="js/portada.js?v=3" defer></script>
+  <script type="module" src="js/vida.js?v=3"></script>
+  <script type="module" src="js/caducidad-pagina.js?v=3"></script>
+</head>
+<body class="portada font-sans antialiased">
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+<!-- encabezado:inicio -->
+<svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4-2.2 1.3a12 12 0 0 0 5.4 5.4l1.3-2.2 4 1.5v3a2 2 0 0 1-2 2A15.5 15.5 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M6 3.5h9l3.5 3.5V20.5H6z"/><path d="M15 3.5V7h3.5M8 11h8M8 15h5"/></symbol>
+  </svg>
+  <header class="site-header" id="nav-cliente">
+    <nav class="shell nav-inner" aria-label="Navegación principal">
+      <a class="brand" href="/index.html#inicio" aria-label="Colegual SpA, inicio"><span class="brand-mark"><img src="/static/img/logo.svg?v=1" alt="Logo de Colegual" width="48" height="48" decoding="async"></span><span><strong>Colegual <span>SpA</span></strong><small>Constructora & Hojalatería</small></span></a>
+      <div class="desktop-links"><a href="/index.html#hojalateria">Hojalatería</a><a href="/index.html#constructora">Construcción</a><a href="/index.html#trabajos">Trabajos</a><a href="/index.html#contacto">Contacto</a></div>
+      <div class="nav-actions"><span id="nav-auth"><a class="account-link" href="/cotizador.html#ingresar" data-action="abrir-auth">Ingresar</a></span><a class="account-link nav-cotizacion" href="/cotizador.html#cotizador" aria-labelledby="nav-carrito-nombre nav-carrito-contador"><svg class="icon nav-cotizacion-icono" aria-hidden="true"><use href="#i-quote"/></svg><span id="nav-carrito-nombre">Mi cotización</span> <span class="nav-cotizacion-cuenta">(<span id="nav-carrito-contador" class="nav-cotizacion-n">0</span>)</span></a><a class="account-link" href="/cotizador.html?demo#cuenta" data-solo-demo hidden>Mi cuenta</a><a class="action action-amber nav-cta" href="/cotizador.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Cotizar</a><button class="icon-button mobile-menu-button" id="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button></div>
+    </nav>
+    <nav id="mobile-menu" class="mobile-menu shell" aria-label="Navegación móvil" hidden><a href="/index.html#hojalateria">Hojalatería</a><a href="/index.html#constructora">Construcción</a><a href="/index.html#trabajos">Trabajos</a><a href="/index.html#contacto">Contacto</a><a href="/cotizador.html#ingresar">Ingresar</a><a href="/cotizador.html#cotizador">Mi cotización (<span id="nav-cotizacion-n-movil" class="nav-cotizacion-n">0</span>)</a><a href="/cotizador.html">Cotizar</a><a href="/cotizador.html?demo#cuenta" data-solo-demo hidden>Mi cuenta</a></nav>
+    <script>
+    (function () {
+      var n = "0";
+      try {
+        var texto = localStorage.getItem("colegual.mockup.v2");
+        var guardado = JSON.parse(texto || "null");
+        var marca = Number(guardado && guardado.guardadoEn);
+        var vigente = Number.isFinite(marca) && marca <= Date.now() && Date.now() - marca < 7 * 24 * 60 * 60 * 1000;
+        if (!vigente) {
+          if (texto) localStorage.removeItem("colegual.mockup.v2");
+        } else if (guardado && Array.isArray(guardado.carrito)) n = String(guardado.carrito.length);
+      } catch (e) {
+        try { localStorage.removeItem("colegual.mockup.v2"); } catch (e2) {}
+      }
+      var nodos = document.querySelectorAll(".nav-cotizacion-n");
+      for (var i = 0; i < nodos.length; i++) nodos[i].textContent = n;
+    })();
+    </script>
+  </header>
+<!-- encabezado:fin -->
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-marca" viewBox="0 0 40 40"><path d="M7 27V19L20 10l13 9v8M12 30h16M20 10v11M7 19l13 8 13-8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 0 1 14 0Z"/><circle cx="12" cy="10" r="2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  </svg>
+  <main id="contenido">
+    <section id="inicio" class="hero shell" aria-labelledby="hero-title">
+      <div class="hero-stage" data-carousel="hero" role="region" aria-roledescription="carrusel" aria-label="Trabajos de Colegual" tabindex="0">
+        <div class="hero-copy"><p class="location-line"><span></span> Empresa familiar de Puerto Montt</p><h1 id="hero-title">Hojalatería a medida y construcción en Puerto Montt</h1><p>Elige tu pieza, ve el precio al instante y descarga tu cotización. Sin crear cuenta.</p><ul class="hero-checks"><li><svg class="icon"><use href="#i-check"/></svg>Piezas hechas a tu medida, en zincalum o prepintado</li><li><svg class="icon"><use href="#i-check"/></svg>Cotización en PDF para guardar o imprimir</li><li><svg class="icon"><use href="#i-check"/></svg>No necesitas crear cuenta</li></ul><div class="hero-actions"><a class="action action-amber" href="#piezas">Ver las piezas <svg class="icon"><use href="#i-arrow"/></svg></a><a class="action action-outline-light" href="#constructora">Pedir presupuesto de obra</a></div></div>
+        <div class="hero-art">
+          <div class="slide is-active" data-slide data-caption="Habilitación de módulos" data-location="" role="group" aria-roledescription="diapositiva" aria-label="1 de 3: Habilitación de módulos"><picture><source type="image/avif" srcset="static/img/modulos-habilitados-800.avif?v=1 800w, static/img/modulos-habilitados.avif?v=1 1600w" sizes="(max-width: 600px) calc(100vw - 36px), (max-width: 1300px) 46vw, 600px"><img src="static/img/modulos-habilitados.webp?v=1" srcset="static/img/modulos-habilitados-800.webp?v=1 800w, static/img/modulos-habilitados.webp?v=1 1600w" sizes="(max-width: 600px) calc(100vw - 36px), (max-width: 1300px) 46vw, 600px" width="1600" height="900" alt="Módulos blancos habilitados con puertas y ventanas" fetchpriority="high" loading="eager" decoding="async"></picture></div>
+          <div class="slide" data-slide data-caption="Canaletas y bajadas de aguas lluvia" data-location="Calbuco" role="group" aria-roledescription="diapositiva" aria-label="2 de 3: Canaletas y bajadas de aguas lluvia" hidden><picture><source type="image/avif" srcset="static/img/calbuco-canaletas-800.avif?v=1 800w, static/img/calbuco-canaletas.avif?v=1 1200w" sizes="(max-width: 600px) calc(100vw - 36px), (max-width: 1300px) 46vw, 600px"><img src="static/img/calbuco-canaletas.webp?v=1" srcset="static/img/calbuco-canaletas-800.webp?v=1 800w, static/img/calbuco-canaletas.webp?v=1 1200w" sizes="(max-width: 600px) calc(100vw - 36px), (max-width: 1300px) 46vw, 600px" width="1200" height="674" alt="Canaleta y bajada de aguas lluvia instaladas en una fachada de Calbuco" loading="lazy" decoding="async"></picture></div>
+          <div class="slide" data-slide data-caption="Hojalatería y remates de cubierta" data-location="Calbuco" role="group" aria-roledescription="diapositiva" aria-label="3 de 3: Hojalatería y remates de cubierta" hidden><picture><source type="image/avif" srcset="static/img/calbuco-remates-800.avif?v=1 800w, static/img/calbuco-remates.avif?v=1 1200w" sizes="(max-width: 600px) calc(100vw - 36px), (max-width: 1300px) 46vw, 600px"><img src="static/img/calbuco-remates.webp?v=1" srcset="static/img/calbuco-remates-800.webp?v=1 800w, static/img/calbuco-remates.webp?v=1 1200w" sizes="(max-width: 600px) calc(100vw - 36px), (max-width: 1300px) 46vw, 600px" width="1200" height="674" alt="Remates metálicos en el borde del techo de un supermercado de Calbuco" loading="lazy" decoding="async"></picture></div>
+
+          <button class="carousel-arrow arrow-prev" type="button" data-prev aria-label="Ver oficio anterior">‹</button><button class="carousel-arrow arrow-next" type="button" data-next aria-label="Ver oficio siguiente">›</button>
+        </div>
+        <div class="hero-caption"><div><span class="caption-label">Nuestro trabajo</span><p data-caption>Habilitación de módulos</p></div><div class="carousel-controls"><div class="carousel-dots" aria-label="Elegir oficio"><button type="button" data-dot="0" aria-label="Ver habilitación de módulos" aria-current="true"></button><button type="button" data-dot="1" aria-label="Ver canaletas y bajadas de aguas lluvia" aria-current="false"></button><button type="button" data-dot="2" aria-label="Ver hojalatería y remates de cubierta" aria-current="false"></button></div><button type="button" class="pause-button" data-pause aria-label="Pausar carrusel" aria-pressed="false">Ⅱ</button></div></div>
+      </div>
+      <div class="service-strip"><span>Un equipo, de principio a fin.</span><p>Construcción</p><i aria-hidden="true"></i><p>Carpintería</p><i aria-hidden="true"></i><p>Hojalatería a medida</p></div>
+      <ul class="confianza" aria-label="Por qué Colegual">
+        <li data-reveal><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg><strong>Empresa familiar</strong><span>Puerto Montt</span></li>
+        <li data-reveal><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><strong>Piezas a tu medida</strong><span>Zincalum o prepintado</span></li>
+        <li data-reveal><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><strong>Cotización en PDF</strong><span>Al instante, sin cuenta</span></li>
+        <li data-reveal><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><strong>Años de oficio</strong><span>Por confirmar</span></li>
+      </ul>
+    </section>
+    <section class="bento-servicios shell" aria-label="Servicios">
+      <div class="bento">
+        <a class="bento-hojalateria" href="#hojalateria"><strong>Hojalatería</strong><span>Perfiles, canaletas y remates. El precio sale al instante.</span></a>
+        <a class="bento-construccion" href="#constructora"><strong>Construcción</strong><span>Casas, ampliaciones y techumbres.</span></a>
+        <a class="bento-carpinteria" href="#constructora"><strong>Carpintería</strong><span>Estructuras y terminaciones en madera.</span></a>
+      </div>
+    </section>
+    <section id="hojalateria" class="shell piezas-section" aria-labelledby="hojalateria-title">
+      <div class="piezas-head" data-reveal><p class="section-label"><span class="small-line"></span> Taller de hojalatería</p><h2 id="hojalateria-title">Hojalatería a medida</h2><p class="muted">Busca tu pieza y toca Cotizar. Si no sabes cómo se llama, te ayudamos abajo.</p></div>
+      <ul id="piezas" class="piezas-grid" data-piezas aria-label="Piezas de hojalatería"></ul>
+      <noscript><p class="muted">Activa JavaScript para ver las piezas, o <a class="footer-text-link" href="cotizador.html">abre el cotizador</a>.</p></noscript>
+      <div class="pieza-ayuda" data-reveal>
+        <svg class="pieza-ayuda-casa" viewBox="0 0 120 90" aria-hidden="true"><path class="casa-trazo" pathLength="1" d="M14 44 60 12l46 32M24 37v41h72V37M52 78V56h16v22M32 50h12v10H32Z"/><circle cx="60" cy="10" r="7"/><circle cx="12" cy="44" r="7"/><circle cx="108" cy="44" r="7"/><circle cx="22" cy="80" r="7"/><g class="gotas" fill="#D97706" stroke="none"><path class="gota" d="M104 52c0 0-3 4-3 6a3 3 0 0 0 6 0c0-2-3-6-3-6Z"/><path class="gota g2" d="M100 52c0 0-3 4-3 6a3 3 0 0 0 6 0c0-2-3-6-3-6Z"/><path class="gota g3" d="M110 52c0 0-3 4-3 6a3 3 0 0 0 6 0c0-2-3-6-3-6Z"/></g></svg>
+        <div><h3>¿No sabes cómo se llama tu pieza?</h3><p class="muted">Elige el dibujo que más se parece. Te decimos el nombre de la pieza.</p></div>
+        <a class="action action-outline-dark" href="cotizador.html?nose=1#no-se">Ayúdame a encontrarla</a>
+      </div>
+    </section>
+    <section id="como-funciona" class="como-section" aria-labelledby="como-title">
+      <div class="shell">
+        <p class="section-label" data-reveal><span class="small-line"></span> En tres pasos</p>
+        <h2 id="como-title">¿Cómo funciona?</h2>
+        <ol class="como-pasos">
+          <li data-reveal><span>1</span><h3>Armas tus piezas</h3><p>Escribes las medidas y ángulos y ves el desarrollo y cortes al instante. En una obra, dejas tu nombre y tu teléfono.</p></li>
+          <li data-reveal><span>2</span><h3>La guardas</h3><p>Queda con folio y resumen de piezas y metros lineales. El aviso automático al taller está por confirmar.</p></li>
+          <li data-reveal><span>3</span><h3>Te contactamos</h3><p>Revisamos las medidas y los ángulos contigo y te avisamos cuando las piezas estén listas en el taller.</p></li>
+        </ol>
+      </div>
+    </section>
+    <div class="separador separador-obra" aria-hidden="true"><svg viewBox="0 0 1200 40" preserveAspectRatio="none" focusable="false"><path d="M0 0h1200v8l-40 0-20 24H220l-20-24H0Z" fill="currentColor"/></svg></div>
+    <section id="constructora" class="construction-section" aria-labelledby="constructora-title">
+      <div class="shell">
+        <div class="construction-visual" data-reveal><p class="section-label"><span class="small-line"></span> Obra</p><h2 id="constructora-title">Construcción y carpintería</h2><p class="muted construction-intro">Casas, ampliaciones, techumbres, módulos y terminaciones. Cuéntanos la idea y el taller te contacta.</p>
+          <div class="local-note"><svg class="icon"><use href="#i-pin"/></svg><p>Somos una empresa familiar de Puerto Montt.<br><span>Oficio local, atención de persona a persona.</span></p></div>
+        </div>
+        <div class="construction-layout">
+        <div class="consultation-card" data-reveal><h3>Pide tu consulta de obra</h3><p class="muted form-intro">Escribe tus datos y copia la consulta. Después llámanos al <a href="tel:+56998487715">+56 9 9848 7715</a> o al <a href="tel:+56991902967">+56 9 9190 2967</a>. Esta página no la envía sola.</p>
+          <form id="project-form">
+            <h4 class="form-step">1. ¿Qué necesitas?</h4>
+            <fieldset class="form-field"><legend>Tipo de trabajo</legend><div class="visita-opciones"><label><input type="radio" name="trabajo" value="Casa nueva" required> <span>Casa nueva</span></label><label><input type="radio" name="trabajo" value="Ampliación"> <span>Ampliación</span></label><label><input type="radio" name="trabajo" value="Techumbre"> <span>Techumbre</span></label><label><input type="radio" name="trabajo" value="Carpintería"> <span>Carpintería</span></label><label><input type="radio" name="trabajo" value="Reparación"> <span>Reparación</span></label><label><input type="radio" name="trabajo" value="Otro"> <span>Otro</span></label></div></fieldset>
+            <h4 class="form-step">2. Cuéntanos tu proyecto</h4>
+            <label class="form-field">¿Qué te gustaría hacer?<textarea name="descripcion" rows="4" required minlength="10" maxlength="2000" placeholder="Ejemplo: quiero ampliar la cocina, unos 3 por 4 metros."></textarea></label>
+            <label class="form-field">Comuna, sector o dirección<input name="ubicacion" autocomplete="address-level2" placeholder="Ejemplo: Alerce, cerca de la plaza" required minlength="2" maxlength="160"></label>
+            <label class="form-field">Metros cuadrados aproximados (opcional)<input name="metros" inputmode="decimal" placeholder="Por ejemplo 12" maxlength="12"></label>
+            <h4 class="form-step">3. ¿Quieres una visita técnica?</h4>
+            <fieldset class="form-field"><legend class="sr-only">Visita técnica</legend><div class="visita-opciones"><label><input type="radio" name="visita" value="Sí"> Sí</label><label><input type="radio" name="visita" value="No"> No</label><label><input type="radio" name="visita" value="No sé" checked> No sé</label></div><p class="form-note">La visita se coordina contigo. Si tiene costo: Por confirmar.</p></fieldset>
+            <h4 class="form-step">4. Fotos del lugar (opcional)</h4>
+            <div class="foto-cuadros">
+              <label class="foto-cuadro">Foto 1<input type="file" accept="image/*" aria-describedby="fotos-nota"></label>
+              <label class="foto-cuadro">Foto 2<input type="file" accept="image/*" aria-describedby="fotos-nota"></label>
+              <label class="foto-cuadro">Foto 3<input type="file" accept="image/*" aria-describedby="fotos-nota"></label>
+            </div>
+            <p id="fotos-nota" class="form-note">Por confirmar. Esta página no guarda fotos.</p>
+            <h4 class="form-step">5. ¿Cómo te contactamos?</h4>
+            <div class="form-grid"><label class="form-field">Nombre<input name="nombre" autocomplete="name" placeholder="Nombre y apellido" required minlength="2" maxlength="100"></label><label class="form-field">Teléfono<input name="telefono" type="tel" autocomplete="tel" inputmode="tel" placeholder="Ejemplo: +56 9 1234 5678" required maxlength="25" title="Ingresa tu número de contacto, con al menos 8 dígitos." aria-describedby="phone-error"><span id="phone-error" class="field-error" hidden></span></label></div>
+            <label class="form-field">Correo (opcional)<input name="correo" type="email" autocomplete="email" placeholder="tu@correo.cl" maxlength="120"></label>
+            <button type="submit" class="action action-dark form-submit" id="project-submit" disabled>Preparar mi consulta <svg class="icon"><use href="#i-arrow"/></svg></button><p class="form-note" id="contact-note">Revisa tu consulta y cópiala. Después llama. Todavía no se envía sola y no necesitas crear cuenta.</p>
+            <div id="message-preview" class="message-preview" hidden><label for="message-text">Tu consulta está lista</label><textarea id="message-text" readonly rows="7"></textarea><div class="message-actions"><button class="action action-secondary" id="copy-message" type="button">Copiar consulta</button></div></div><p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+          </form><noscript><p class="form-note">Activa JavaScript para preparar tu consulta y usar los controles de la página.</p></noscript>
+        </div>
+        <aside class="como-sigue" data-reveal aria-labelledby="obra-sigue">
+          <h3 id="obra-sigue">Cómo sigue</h3>
+          <ol>
+            <li>Copias la consulta. Esta página no la envía sola.</li>
+            <li>Llamas al <a href="tel:+56998487715">+56 9 9848 7715</a> o al <a href="tel:+56991902967">+56 9 9190 2967</a>.</li>
+            <li>El taller revisa las medidas y, si hace falta, coordina la visita.</li>
+          </ol>
+        </aside>
+        </div>
+      </div>
+    </section>
+    <section id="trabajos" class="trabajos-section" aria-labelledby="trabajos-title">
+      <div class="shell">
+        <p class="section-label" data-reveal><span class="small-line"></span> Obras</p>
+        <h2 id="trabajos-title">Trabajos</h2>
+        <p class="muted trabajos-intro">Algunas obras en las que participó Colegual.</p>
+        <ul class="trabajos-grid">
+          <li data-reveal><figure><picture><source type="image/avif" srcset="static/img/vivienda-dos-pisos-800.avif?v=1 800w, static/img/vivienda-dos-pisos.avif?v=1 1280w" sizes="(max-width: 600px) calc(100vw - 32px), (max-width: 800px) calc(100vw - 48px), (max-width: 1320px) 30vw, 400px"><img src="static/img/vivienda-dos-pisos.webp?v=1" srcset="static/img/vivienda-dos-pisos-800.webp?v=1 800w, static/img/vivienda-dos-pisos.webp?v=1 1280w" sizes="(max-width: 600px) calc(100vw - 32px), (max-width: 800px) calc(100vw - 48px), (max-width: 1320px) 30vw, 400px" width="1280" height="720" alt="Vivienda de dos pisos con revestimiento oscuro y ventanales; Colegual construyó una parte de la casa y su hojalatería" loading="lazy" decoding="async"></picture><figcaption>Construcción y hojalatería de vivienda<span class="trabajo-lugar">Lugar: Por confirmar</span></figcaption></figure></li>
+          <li data-reveal><figure><picture><source type="image/avif" srcset="static/img/estructura-madera-800.avif?v=1 800w, static/img/estructura-madera.avif?v=1 1600w" sizes="(max-width: 600px) calc(100vw - 32px), (max-width: 800px) calc(100vw - 48px), (max-width: 1320px) 30vw, 400px"><img src="static/img/estructura-madera.webp?v=1" srcset="static/img/estructura-madera-800.webp?v=1 800w, static/img/estructura-madera.webp?v=1 1600w" sizes="(max-width: 600px) calc(100vw - 32px), (max-width: 800px) calc(100vw - 48px), (max-width: 1320px) 30vw, 400px" width="1600" height="900" alt="Estructura de madera durante una obra de carpintería" loading="lazy" decoding="async"></picture><figcaption>Carpintería y estructuras<span class="trabajo-lugar">Lugar: Por confirmar</span></figcaption></figure></li>
+          <li data-reveal><figure><picture><source type="image/avif" srcset="static/img/equipo-hojalateria-800.avif?v=1 800w, static/img/equipo-hojalateria.avif?v=1 1200w" sizes="(max-width: 600px) calc(100vw - 32px), (max-width: 800px) calc(100vw - 48px), (max-width: 1320px) 30vw, 400px"><img src="static/img/equipo-hojalateria.webp?v=1" srcset="static/img/equipo-hojalateria-800.webp?v=1 800w, static/img/equipo-hojalateria.webp?v=1 1200w" sizes="(max-width: 600px) calc(100vw - 32px), (max-width: 800px) calc(100vw - 48px), (max-width: 1320px) 30vw, 400px" width="1200" height="674" alt="Equipo de trabajo instalando hojalatería desde andamios en Calbuco" loading="lazy" decoding="async"></picture><figcaption>Instalación de hojalatería en terreno<span class="trabajo-lugar">Lugar: Calbuco</span></figcaption></figure></li>
+        </ul>
+      </div>
+    </section>
+    <section id="problemas" class="problemas shell textura-metal" aria-labelledby="problemas-titulo">
+      <h2 id="problemas-titulo">Problema y solución</h2>
+      <ul class="problemas-lista">
+        <li><h3>Filtración</h3><p>El agua entra por la cresta del techo.</p><a href="cotizador.html?perfil=cumbrera">Ver la cumbrera</a></li>
+        <li><h3>Canaleta rebalsada</h3><p>El agua del techo no llega a la bajada.</p><a href="cotizador.html?perfil=canaleta">Ver la canaleta</a></li>
+        <li><h3>Forro suelto</h3><p>La gota se devuelve por el alero.</p><a href="cotizador.html?perfil=cortagotera">Ver el forro</a></li>
+      </ul>
+    </section>
+  </main>
+  <div class="separador separador-contacto" aria-hidden="true"><svg viewBox="0 0 1200 40" preserveAspectRatio="none" focusable="false"><path d="M0 0h1200v8l-40 0-20 24H220l-20-24H0Z" fill="currentColor"/></svg></div>
+  <section id="contacto" class="contacto-section" aria-labelledby="contacto-propio-titulo">
+    <div class="shell contacto-inner">
+      <div data-reveal>
+        <p class="section-label"><span class="small-line"></span> Contacto</p>
+        <h2 id="contacto-propio-titulo">Hablemos de tu obra</h2>
+        <p class="muted">El correo provisional es <a href="mailto:colegualspasoporte@gmail.com">colegualspasoporte@gmail.com</a>. El aviso automático todavía no está conectado.</p>
+      </div>
+      <div class="contacto-acciones" data-reveal>
+        <a class="action action-outline-dark" href="mailto:colegualspasoporte@gmail.com">Escribir un correo</a>
+        <a class="action action-amber" href="tel:+56998487715"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Llamar al +56 9 9848 7715</a><a class="action action-outline-dark" href="tel:+56991902967"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Llamar al +56 9 9190 2967</a>
+      </div>
+    </div>
+  </section>
+  <footer class="site-footer" id="pie">
+    <div class="shell footer-grid">
+      <section aria-labelledby="contact-title" data-reveal><h2 id="contact-title">Hablemos de tu próxima obra.</h2><p class="footer-muted">Construcción, carpintería y plegados a medida.</p><dl class="contact-list"><div><dt>Teléfono</dt><dd id="contact-phone"><a href="tel:+56998487715">+56 9 9848 7715</a> · <a href="tel:+56991902967">+56 9 9190 2967</a></dd></div><div><dt>Correo electrónico</dt><dd id="contact-email">Por confirmar</dd></div><div><dt>Horario de atención</dt><dd id="contact-hours">Por confirmar</dd></div></dl><a class="action footer-action" id="footer-llamar" href="tel:+56998487715"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span data-telefono>Llamar al +56 9 9848 7715</span></a><a class="action footer-action" id="footer-llamar-2" href="tel:+56991902967"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span data-telefono>Llamar al +56 9 9190 2967</span></a></section>
+      <section aria-labelledby="location-title" data-reveal><h2 id="location-title">Encuéntranos en Puerto Montt</h2><p class="footer-muted" id="retiro-taller">Retiro en taller. El material se retira en el taller.</p><a class="map-card" id="directions-link" href="https://www.google.com/maps/search/?api=1&amp;query=Pje.%20Edmundo%20Lobos%205507294%2C%205480000%20Puerto%20Montt%2C%20Los%20Lagos%20%28plus%20code%20G2WX%2B9J%29" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.6-6-11a6 6 0 1 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg><span id="contact-address">Pje. Edmundo Lobos 5507294, 5480000 Puerto Montt, Los Lagos (plus code G2WX+9J)</span><span class="map-card-cta">Abrir en Google Maps <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg><span class="sr-only"> (se abre en otra pestaña)</span></span></a><p class="footer-muted">Horario de atención: Por confirmar</p><a class="action footer-action" id="retiro-llamar" href="tel:+56991902967"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg><span>Llamar al +56 9 9190 2967</span></a></section>
+      <section class="client-card" aria-labelledby="clients-title" data-reveal>
+        <h2 id="clients-title">Empresas para las que hemos trabajado</h2>
+        <div class="marquesina">
+          <ul>
+            <li>Supermercado Higgins · Calbuco · hojalatería</li>
+          </ul>
+          <ul aria-hidden="true">
+            <li>Supermercado Higgins · Calbuco · hojalatería</li>
+          </ul>
+        </div>
+        <ul class="client-work-list">
+          <li>
+            <h3>Supermercado Higgins</h3>
+            <p class="client-location"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg> Calbuco</p>
+            <p class="footer-muted">Trabajos de hojalatería: remates de cubierta, canaletas y bajadas de aguas lluvia.</p>
+          </li>
+        </ul>
+      </section>
+    </div>
+    <div class="shell footer-bottom"><a href="#inicio">Colegual SpA <span>· Constructora & Hojalatería</span></a><p>Teléfono: <a id="footer-telefono" href="tel:+56998487715">+56 9 9848 7715</a> · <a id="footer-telefono-2" href="tel:+56991902967">+56 9 9190 2967</a></p><span>© <span id="copyright-year">2026</span> Colegual SpA</span></div>
+  </footer>
+  <nav class="barra-movil" aria-label="Acciones rápidas"><a href="tel:+56991902967"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Llamar</a><a href="/cotizador.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Cotizar</a></nav>
+  <script type="module" src="js/portada-piezas.js?v=3"></script>
+</body>
+</html>

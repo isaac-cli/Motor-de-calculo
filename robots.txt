@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+# Dominio público: Por confirmar.
+# Cuando exista, agrega una línea así, con la dirección real:
+# Sitemap: https://DOMINIO/sitemap.xml

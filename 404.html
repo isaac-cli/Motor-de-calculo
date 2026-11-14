@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+  (function () {
+    function atrapar(evento) {
+      var transicion = evento.viewTransition;
+      if (!transicion) return;
+      if (transicion.ready) transicion.ready.catch(function () {});
+      if (transicion.updateCallbackDone) transicion.updateCallbackDone.catch(function () {});
+      if (transicion.finished) transicion.finished.catch(function () {});
+    }
+    function esTransicion(razon) {
+      var mensaje = razon && typeof razon.message === "string" ? razon.message : (typeof razon === "string" ? razon : "");
+      return /view.?transition|Transition was skipped|skipped view/i.test(mensaje);
+    }
+    window.addEventListener("pagereveal", atrapar);
+    window.addEventListener("pageswap", atrapar);
+    window.addEventListener("unhandledrejection", function (evento) {
+      if (esTransicion(evento.reason)) evento.preventDefault();
+    });
+  })();
+  </script>
+  <style>
+  @view-transition { navigation: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition { navigation: none; }
+  }
+  </style>
+  <meta name="color-scheme" content="light">
+  <title>Página no encontrada · Colegual SpA</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/static/img/logo.svg?v=1" type="image/svg+xml">
+  <link rel="icon" href="/static/img/logo-192.png?v=1" type="image/png" sizes="192x192">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2">
+  <style>
+    @font-face { font-family: Inter; font-style: normal; font-weight: 400 900; font-display: optional; src: url("https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400 800; font-display: optional; src: url("https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  </style>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <link rel="stylesheet" href="/static/css/portada.css">
+  <link rel="stylesheet" href="/static/css/encabezado.css">
+  <script type="speculationrules">
+{"prefetch":[{"eagerness":"moderate","urls":["/index.html","/cotizador.html","/cotizacion.html"]}]}
+</script>
+  <script src="/js/encabezado.js" defer></script>
+  <script type="module" src="/js/vida.js"></script>
+  <style>
+    .pagina-404 { padding: 64px 0 80px; }
+    .pagina-404 h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); line-height: 1.15; font-weight: 800; letter-spacing: -1px; max-width: min(15ch, 100%); }
+    .pagina-404 p { font-size: 18px; line-height: 1.6; margin-top: 24px; max-width: 65ch; }
+    .pagina-404 .acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .pagina-404 a:not(.action) { color: #0f172a; font-weight: 700; text-decoration: underline; }
+  </style>
+</head>
+<body class="portada font-sans antialiased">
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+<!-- encabezado:inicio -->
+<svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-3a7 7 0 0 1 14 0v3"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4-2.2 1.3a12 12 0 0 0 5.4 5.4l1.3-2.2 4 1.5v3a2 2 0 0 1-2 2A15.5 15.5 0 0 1 4.5 5.5a2 2 0 0 1 2-2Z"/></symbol>
+    <symbol id="i-quote" viewBox="0 0 24 24"><path d="M6 3.5h9l3.5 3.5V20.5H6z"/><path d="M15 3.5V7h3.5M8 11h8M8 15h5"/></symbol>
+  </svg>
+  <header class="site-header" id="nav-cliente">
+    <nav class="shell nav-inner" aria-label="Navegación principal">
+      <a class="brand" href="/index.html#inicio" aria-label="Colegual SpA, inicio"><span class="brand-mark"><img src="/static/img/logo.svg?v=1" alt="Logo de Colegual" width="48" height="48" decoding="async"></span><span><strong>Colegual <span>SpA</span></strong><small>Constructora & Hojalatería</small></span></a>
+      <div class="desktop-links"><a href="/index.html#hojalateria">Hojalatería</a><a href="/index.html#constructora">Construcción</a><a href="/index.html#trabajos">Trabajos</a><a href="/index.html#contacto">Contacto</a></div>
+      <div class="nav-actions"><span id="nav-auth"><a class="account-link" href="/cotizador.html#ingresar" data-action="abrir-auth">Ingresar</a></span><a class="account-link nav-cotizacion" href="/cotizador.html#cotizador" aria-labelledby="nav-carrito-nombre nav-carrito-contador"><svg class="icon nav-cotizacion-icono" aria-hidden="true"><use href="#i-quote"/></svg><span id="nav-carrito-nombre">Mi cotización</span> <span class="nav-cotizacion-cuenta">(<span id="nav-carrito-contador" class="nav-cotizacion-n">0</span>)</span></a><a class="account-link" href="/cotizador.html?demo#cuenta" data-solo-demo hidden>Mi cuenta</a><a class="action action-amber nav-cta" href="/cotizador.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Cotizar</a><button class="icon-button mobile-menu-button" id="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu"><svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg></button></div>
+    </nav>
+    <nav id="mobile-menu" class="mobile-menu shell" aria-label="Navegación móvil" hidden><a href="/index.html#hojalateria">Hojalatería</a><a href="/index.html#constructora">Construcción</a><a href="/index.html#trabajos">Trabajos</a><a href="/index.html#contacto">Contacto</a><a href="/cotizador.html#ingresar">Ingresar</a><a href="/cotizador.html#cotizador">Mi cotización (<span id="nav-cotizacion-n-movil" class="nav-cotizacion-n">0</span>)</a><a href="/cotizador.html">Cotizar</a><a href="/cotizador.html?demo#cuenta" data-solo-demo hidden>Mi cuenta</a></nav>
+    <script>
+    (function () {
+      var n = "0";
+      try {
+        var texto = localStorage.getItem("colegual.mockup.v2");
+        var guardado = JSON.parse(texto || "null");
+        var marca = Number(guardado && guardado.guardadoEn);
+        var vigente = Number.isFinite(marca) && marca <= Date.now() && Date.now() - marca < 7 * 24 * 60 * 60 * 1000;
+        if (!vigente) {
+          if (texto) localStorage.removeItem("colegual.mockup.v2");
+        } else if (guardado && Array.isArray(guardado.carrito)) n = String(guardado.carrito.length);
+      } catch (e) {
+        try { localStorage.removeItem("colegual.mockup.v2"); } catch (e2) {}
+      }
+      var nodos = document.querySelectorAll(".nav-cotizacion-n");
+      for (var i = 0; i < nodos.length; i++) nodos[i].textContent = n;
+    })();
+    </script>
+  </header>
+<!-- encabezado:fin -->
+  <main id="contenido" class="shell pagina-404">
+    <p class="section-label"><span class="small-line"></span> Error 404</p>
+    <h1>No encontramos esa página</h1>
+    <p>El enlace no corresponde a una página de Colegual. Puedes volver al inicio o cotizar una pieza.</p>
+    <div class="acciones">
+      <a class="action action-amber" href="/index.html">Ir al inicio</a>
+      <a class="action action-outline-dark" href="/cotizador.html">Cotizar</a>
+    </div>
+    <p>Si necesitas hablar con el taller, llama al <a href="tel:+56998487715">+56 9 9848 7715</a> o al <a href="tel:+56991902967">+56 9 9190 2967</a>.</p>
+  </main>
+  <nav class="barra-movil" aria-label="Acciones rápidas"><a href="tel:+56991902967"><svg class="icon" aria-hidden="true"><use href="#i-phone"/></svg>Llamar</a><a href="/cotizador.html"><svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg>Cotizar</a></nav>
+</body>
+</html>

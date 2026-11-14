@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-label="Colegual SpA">
+  <rect width="160" height="160" rx="24" fill="#D97706"/>
+  <g fill="none" stroke="#0F172A" stroke-linecap="round" stroke-linejoin="round" transform="translate(24 24) scale(2.8)">
+    <path d="M6 28 L6 20 L20 10 L34 20 L34 28" stroke-width="3.5"/>
+    <path d="M12 32 L28 32" stroke-width="2.5"/>
+  </g>
+</svg>

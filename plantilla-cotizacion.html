@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ficha de Corte {{folio}} · Colegual SpA</title><link rel="icon" href="static/img/logo.svg?v=1" type="image/svg+xml"><link rel="icon" href="static/img/logo-192.png?v=1" type="image/png" sizes="192x192"><link rel="apple-touch-icon" href="static/img/logo-192.png?v=1"><style>
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#eef1f4;padding:24px;color:#111}
+.p{max-width:760px;width:100%;margin:auto;background:#fff;border:1px solid #1E293B}
+.h{background:#0F172A;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:14px 20px;gap:16px}
+.h img{height:72px;width:auto;display:block}
+.n{text-align:right;font-size:18px;white-space:nowrap}.n b{color:#D97706;font-size:22px}.n small{font-size:16px;color:#cbd5e1}
+.sec{background:#1E293B;color:#fff;font-weight:bold;padding:6px 20px;font-size:16px}
+.g{display:grid;grid-template-columns:1fr 1fr;padding:10px 20px;font-size:16px;gap:4px 20px}
+.k{color:#555;display:inline-block;width:130px;font-weight:bold}
+table{width:100%;border-collapse:collapse;font-size:16px}th{background:#1E293B;color:#fff;padding:8px}td{border-bottom:1px solid #ccd;padding:8px}.r{text-align:right}
+.t{width:300px;margin:10px 20px 10px auto;font-size:16px}.t div{display:flex;justify-content:space-between;padding:5px 0}
+.t .f{border-top:2px solid #1E293B;font-weight:bold;font-size:20px;color:#D97706}
+.ft{background:#f8fafc;padding:12px 20px;font-size:16px;color:#333}
+.w{display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:48px;background:#D97706;color:#1E293B;padding:12px 18px;border-radius:8px;font-weight:bold;margin-top:8px;font-size:16px;border:0;cursor:pointer;text-decoration:none}
+@media (max-width:600px){
+ body{padding:8px}
+ .h{flex-direction:column;align-items:flex-start}.n{text-align:left;white-space:normal}
+ .g{grid-template-columns:1fr;padding:10px 14px}.g div[style]{grid-column:auto!important}
+ .k{width:auto;margin-right:8px}
+ .tabla{display:block;overflow-x:auto;max-width:100%;min-height:24rem}table{font-size:16px;min-height:24rem}th,td{padding:6px 4px;height:48px;box-sizing:border-box}
+ .h img{width:72px;height:72px;max-width:72px}
+ .t{width:auto;margin:10px 14px}
+ .sec,.ft{padding-left:14px;padding-right:14px}
+ .h img{max-width:100%;height:auto;max-height:72px}
+ .w{display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:100%;margin-top:10px;min-height:48px}
+}
+@media print{
+ @page{size:A4;margin:12mm}
+ body{background:#fff;padding:0}
+ .p{width:auto;border:0}
+ .no-print{display:none!important}
+ *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ tr,.t,.ft{page-break-inside:avoid}
+}
+</style></head><body><div class="p">
+<div class="h"><img src="static/img/logo-512.png?v=1" alt="Colegual SpA" width="512" height="512">
+<div class="n">FICHA TÉCNICA DE CORTE<br>N° <b>{{folio}}</b><br><small>Fecha: {{fecha}} · Vigencia {{validez_dias}} días</small></div></div>
+<div class="sec">Datos del taller</div>
+<div class="g"><div><span class="k">RUT</span>Por confirmar</div><div>Carpintería y terminaciones</div>
+<div><span class="k">Dirección</span>Pje. Edmundo Lobos 5507294, 5480000 Puerto Montt, Los Lagos (plus code G2WX+9J)</div><div>Albañilería y cerámica · Gasfitería</div>
+<div><span class="k">Ciudad</span>Puerto Montt</div><div>Pintura y electricidad</div>
+<div><span class="k">Giro</span>Obras menores</div><div>Estructuras metálicas</div>
+<div><span class="k">Teléfono</span><a href="tel:+56998487715">+56 9 9848 7715</a> · <a href="tel:+56991902967">+56 9 9190 2967</a></div><div>Hojalatería e instalaciones</div>
+<div><span class="k">Correo</span>colegualspasoporte@gmail.com</div></div>
+<div class="sec">Datos del solicitante</div>
+<div class="g"><div><span class="k">Nombre</span>{{nombre_cliente}}</div><div><span class="k">RUT</span>{{rut_cliente}}</div>
+<div><span class="k">Dirección</span>{{direccion}}</div><div><span class="k">Comuna</span>{{comuna}}</div>
+<div><span class="k">Giro</span>{{giro}}</div><div><span class="k">Teléfono</span>{{telefono}}</div>
+<div style="grid-column:1/3"><span class="k">Correo</span>{{correo}}</div>
+<div style="grid-column:1/3"><span class="k">Trabajo</span>{{trabajo_solicitado}}</div></div>
+<div class="tabla"><table><thead><tr><th>Ítem</th><th>Cantidad</th><th>Unidad</th><th style="text-align:left">Descripción (Lados, Ángulos y CM.D)</th><th class="r">Desglose de Tiras</th></tr></thead><tbody>
+{{#items}}<tr><td>{{n}}</td><td>{{cantidad}}</td><td>{{unidad}}</td><td>{{descripcion}}</td><td class="r">{{corte}}</td></tr>{{/items}}
+</tbody></table></div>
+<div class="t"><div><span>Ítems registrados</span><span>{{total_items}}</span></div><div class="f"><span>METROS LINEALES</span><span>{{metros_totales}}</span></div></div>
+<div class="ft"><b>Qué pasa ahora:</b> el taller revisa las medidas, ángulos y desarrollos de tus piezas para programar el corte y plegado en planchas de 122 cm × 3 m.
+<div class="no-print"><button id="btn-pdf" class="w" onclick="window.print()">⬇ Descargar PDF</button></div>
+<br>Documento técnico de cálculo geométrico y orden de corte.</div>
+</div></body></html>

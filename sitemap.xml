@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- El dominio público está por confirmar. Estas son las rutas del sitio, sin un dominio inventado. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>/index.html</loc>
+  </url>
+  <url>
+    <loc>/cotizador.html</loc>
+  </url>
+</urlset>
